@@ -36,14 +36,14 @@ public class Scroll extends Element {
                 Theme.BG_RADIUS.value, Theme.BACKGROUND.value);
 
         renderScope.enableScissor(padding, padding, width - padding, height - padding);
-        renderScope.matrices.push();
-        renderScope.matrices.translate(padding, -scroll + padding, 0);
+        renderScope.getMatrixStack().push();
+        renderScope.getMatrixStack().translate(padding, -scroll + padding, 0);
 
         ElementRenderer.render(children, ctx.elapsed, renderScope,
                 ctx.mouseX - padding,
                 ctx.mouseY - padding + scroll);
 
-        renderScope.matrices.pop();
+        renderScope.getMatrixStack().pop();
         renderScope.disableScissor();
 
         if (maxScroll > 0) {
