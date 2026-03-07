@@ -1,9 +1,9 @@
 package org.saturnclient.ui.screens.cosmetics;
 
 import org.saturnclient.client.player.SaturnPlayer;
-// import org.saturnclient.cosmetics.hat.Hats;
 import org.saturnclient.common.minecraft.MinecraftProvider;
 import org.saturnclient.config.AnimationConfig;
+import org.saturnclient.cosmetics.Hats;
 import org.saturnclient.ui.SaturnScreen;
 import org.saturnclient.ui.anim.Fade;
 import org.saturnclient.ui.anim.SlideY;
@@ -36,24 +36,23 @@ public class HatMenu extends SaturnScreen {
         AnimationStagger stagger = new AnimationStagger(AnimationConfig.cosmeticsMenu);
 
         if (player != null) {
-            // for (String hat : Hats.availableHats) {
+            for (String hat : Hats.availableHats) {
+                stagger.draw(
+                        new CosmeticPreview(
+                                hat == player.hat,
+                                Textures.getHatPreview(hat),
+                                () -> Hats.setHat(hat))
+                                .dimensions(50, 50)
+                                .position((50 + g) * col, (50 + g) * row)
+                                .animation(new SlideY(AnimationConfig.cosmeticsMenu, 14)));
 
-            //     stagger.draw(
-            //             new CosmeticPreview(
-            //                     hat == player.hat,
-            //                     Textures.getHatPreview(hat),
-            //                     () -> Hats.setHat(hat))
-            //                     .dimensions(50, 50)
-            //                     .position((50 + g) * col, (50 + g) * row)
-            //                     .animation(new SlideY(AnimationConfig.cosmeticsMenu, 14)));
-
-            //     if (col == 5) {
-            //         col = 0;
-            //         row++;
-            //     } else {
-            //         col++;
-            //     }
-            // }
+                if (col == 5) {
+                    col = 0;
+                    row++;
+                } else {
+                    col++;
+                }
+            }
         }
 
         scroll.draw(stagger);
@@ -70,8 +69,7 @@ public class HatMenu extends SaturnScreen {
                 .animation(new Fade(500)));
 
         draw(new Sidebar(2, this.provider::close)
-                .centerOffset(width, height, -(scrollWidth / 2 + 20), 0)
-                .animation(new Fade(400)));
+                .centerOffset(width, height, -(scrollWidth / 2 + 20), 0));
 
         draw(new TabMenu(1,
                 new TabMenuComponent(Textures.CLOAK, () -> {
