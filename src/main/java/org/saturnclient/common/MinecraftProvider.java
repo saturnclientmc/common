@@ -1,6 +1,7 @@
 package org.saturnclient.common;
 
 import org.saturnclient.common.ref.asset.IdentifierRef;
+import org.saturnclient.common.ref.game.MinecraftClientRef;
 import org.saturnclient.ui.SaturnScreen;
 
 import java.awt.image.BufferedImage;
@@ -14,7 +15,7 @@ public abstract class MinecraftProvider {
         Options
     }
 
-    public abstract IMinecraftClient getClient();
+    public abstract MinecraftClientRef getClient();
 
     public abstract void setScreen(SaturnScreen screen);
 

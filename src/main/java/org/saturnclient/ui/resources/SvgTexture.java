@@ -10,9 +10,9 @@ import java.util.List;
 import com.kitfox.svg.SVGDiagram;
 import com.kitfox.svg.SVGUniverse;
 
-import org.saturnclient.common.IMinecraftClient;
 import org.saturnclient.common.MinecraftProvider;
 import org.saturnclient.common.ref.asset.IdentifierRef;
+import org.saturnclient.common.ref.game.MinecraftClientRef;
 
 public class SvgTexture {
 
@@ -50,7 +50,7 @@ public class SvgTexture {
         return image;
     }
 
-    public static IdentifierRef getSvg(IMinecraftClient client, IdentifierRef svgImage, int width, int height) {
+    public static IdentifierRef getSvg(MinecraftClientRef client, IdentifierRef svgImage, int width, int height) {
         IdentifierRef id = IdentifierRef
                 .of(svgImage.toString().replaceAll("\\.svg$", (width + "_" + height).toString() + ".png"));
 

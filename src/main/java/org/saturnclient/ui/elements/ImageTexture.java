@@ -1,8 +1,8 @@
 package org.saturnclient.ui.elements;
 
-import org.saturnclient.common.IMinecraftClient;
 import org.saturnclient.common.MinecraftProvider;
 import org.saturnclient.common.ref.asset.IdentifierRef;
+import org.saturnclient.common.ref.game.MinecraftClientRef;
 import org.saturnclient.ui.Element;
 import org.saturnclient.ui.ElementContext;
 import org.saturnclient.ui.RenderScope;
@@ -18,7 +18,7 @@ public class ImageTexture extends Element {
     @Override
     public void render(RenderScope renderScope, ElementContext ctx) {
         if (sprite.toString().endsWith(".svg")) {
-            IMinecraftClient client = MinecraftProvider.PROVIDER.getClient();
+            MinecraftClientRef client = MinecraftProvider.PROVIDER.getClient();
 
             int renderWidth = (int) (width * client.getWindow().getFramebufferWidth() / client.getWindow().getWidth());
             int renderHeight = (int) (height * client.getWindow().getFramebufferHeight()
