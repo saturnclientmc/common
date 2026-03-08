@@ -48,7 +48,7 @@ public class TitleMenu extends SaturnScreen {
                 .animation(new SlideFade(AnimationConfig.mainMenu, -10)));
 
         mainButtonStagger.draw(new Button("QUIT", () -> {
-            Providers.saturn.stop();
+            Providers.saturn.getClient().scheduleStop();
         }).scale(0.69f).dimensions(206, 52).position(146, 80)
                 .animation(new SlideFade(AnimationConfig.mainMenu, -10)));
 

@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.saturnclient.client.player.SaturnPlayer;
 import org.saturnclient.common.provider.Providers;
+import org.saturnclient.common.ref.game.MinecraftClientRef;
 
 import dev.selimaj.session.Session;
 
@@ -27,7 +28,9 @@ public class ServiceClient {
     }
 
     public static boolean authenticate() {
-        Providers.saturn.onClientStopping(() -> {
+        MinecraftClientRef client = Providers.saturn.getClient();
+
+        client.onClientStopping(() -> {
             if (session != null) {
                 try {
                     session.close();
@@ -38,9 +41,9 @@ public class ServiceClient {
         });
 
         try {
-            String accessToken = Providers.saturn.getAccessToken();
-            uuid = Providers.saturn.getUuid();
-            String username = Providers.saturn.getUsername();
+            String accessToken = client.getAccessToken();
+            uuid = client.getUuid();
+            String username = client.getUsername();
 
             if (accessToken == null || uuid == null || username == null) {
                 Providers.saturn.logError("No active Minecraft session found");

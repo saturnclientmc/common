@@ -11,21 +11,11 @@ public interface SaturnProvider {
 
     public void playEmote(UUID fromPlayerUuid, String emoteIdOrNull);
 
-    public String getAccessToken();
-
-    public UUID getUuid();
-
-    public String getUsername();
-
-    public void onClientStopping(Runnable handler);
-
     public void logInfo(String message);
 
     public void logError(String message);
 
     public void logError(String message, Throwable throwable);
-
-    public void stop();
 
     public void registerBufferedImageTexture(IdentifierRef i, BufferedImage bi);
 }
