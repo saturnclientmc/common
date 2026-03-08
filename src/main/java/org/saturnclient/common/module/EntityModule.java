@@ -24,7 +24,7 @@ public interface EntityModule {
      * nametag rendering.  Implementations are created per-entity each
      * frame; they are intentionally not cached.
      */
-    interface EntityState {
+    public static interface EntityState {
 
         /** The entity's display name, or {@code null} if it has none. */
         String getCustomName();
