@@ -26,7 +26,7 @@ public class Scroll extends Element {
     }
 
     public void draw(Element element) {
-        ElementRenderer.INSTANCE.draw(children, element);
+        ElementRenderer.draw(children, element);
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Scroll extends Element {
         renderScope.getMatrixStack().push();
         renderScope.getMatrixStack().translate(padding, -scroll + padding, 0);
 
-        ElementRenderer.INSTANCE.render(children, ctx.elapsed, renderScope,
+        ElementRenderer.render(children, ctx.elapsed, renderScope,
                 ctx.mouseX - padding,
                 ctx.mouseY - padding + scroll);
 
@@ -111,22 +111,22 @@ public class Scroll extends Element {
 
     @Override
     public void keyPressed(int keyCode, int scanCode, int modifiers) {
-        ElementRenderer.INSTANCE.keyPressed(children, keyCode, scanCode, modifiers);
+        ElementRenderer.keyPressed(children, keyCode, scanCode, modifiers);
     }
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        ElementRenderer.INSTANCE.mouseClicked(children, mouseX - padding, mouseY - padding + scroll, button);
+        ElementRenderer.mouseClicked(children, mouseX - padding, mouseY - padding + scroll, button);
     }
 
     @Override
     public void mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        ElementRenderer.INSTANCE.mouseDragged(children, mouseX - padding, mouseY - padding + scroll, button, deltaX,
+        ElementRenderer.mouseDragged(children, mouseX - padding, mouseY - padding + scroll, button, deltaX,
                 deltaY);
     }
 
     @Override
     public void mouseReleased(double mouseX, double mouseY, int button) {
-        ElementRenderer.INSTANCE.mouseReleased(children, mouseX - padding, mouseY - padding + scroll, button);
+        ElementRenderer.mouseReleased(children, mouseX - padding, mouseY - padding + scroll, button);
     }
 }

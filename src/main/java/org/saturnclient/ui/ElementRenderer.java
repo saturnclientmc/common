@@ -1,27 +1,92 @@
 package org.saturnclient.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class ElementRenderer {
-    public static ElementRenderer INSTANCE;
+public class ElementRenderer {
+    public static void draw(List<Element> elements, Element element) {
+        synchronized (elements) {
+            elements.add(element);
+        }
 
-    public abstract void draw(List<Element> elements, Element element);
+        if (element.animation != null) {
+            element.animation.init(element);
+        }
+    }
 
-    public abstract void render(List<Element> elements, long elapsed, RenderScope renderScope, int mouseX, int mouseY);
+    public static void render(List<Element> elements, long elapsed, RenderScope renderScope, int mouseX, int mouseY) {
+        for (Element element : elements) {
+            element.playAnimationFrame(elapsed);
 
-    public abstract void mouseClicked(List<Element> elements, double mouseX, double mouseY, int button);
+            renderScope.getMatrixStack().push();
+            renderScope.setOpacity(element.opacity);
+            renderScope.getMatrixStack().translate(element.x, element.y, 0);
+            renderScope.getMatrixStack().scale(element.scale, element.scale, 1.0f);
+            element.render(renderScope, new ElementContext(elapsed, mouseX, mouseY, element));
+            renderScope.getMatrixStack().pop();
+        }
+    }
 
-    public abstract void mouseScrolled(
+    public static void mouseClicked(List<Element> elements, double mouseX, double mouseY, int button) {
+        if (button == 0) {
+            for (Element element : new ArrayList<>(elements)) {
+                element.focused = false;
+
+                int adjustedMouseX = (int) mouseX - element.x;
+                int adjustedMouseY = (int) mouseY - element.y;
+
+                element.mouseClicked(adjustedMouseX * element.scale, adjustedMouseY * element.scale, button);
+
+                if (element.opacity > 0 && Utils.isHovering(adjustedMouseX, adjustedMouseY, element.width,
+                        element.height, element.scale)) {
+                    element.focused = true;
+                    element.click((int) (adjustedMouseX * element.scale), (int) (adjustedMouseY * element.scale));
+                }
+            }
+        }
+    }
+
+    public static void mouseScrolled(
             List<Element> elements,
             double mouseX,
             double mouseY,
             double horizontalAmount,
-            double verticalAmount);
+            double verticalAmount) {
+        for (Element element : new ArrayList<>(elements)) {
+            if (Utils.isHovering((int) mouseX - element.x, (int) mouseY - element.y, element.width, element.height,
+                    element.scale)) {
+                element.scroll(
+                        (int) mouseX - element.x,
+                        (int) mouseY - element.y,
+                        horizontalAmount,
+                        verticalAmount);
+            }
+        }
+    }
 
-    public abstract void keyPressed(List<Element> elements, int keyCode, int scanCode, int modifiers);
+    public static void keyPressed(List<Element> elements, int keyCode, int scanCode, int modifiers) {
+        for (Element element : new ArrayList<>(elements)) {
+            if (element.focused && element.opacity > 0) {
+                element.keyPressed(keyCode, scanCode, modifiers);
 
-    public abstract void mouseDragged(List<Element> elements, double mouseX, double mouseY, int button, double deltaX,
-            double deltaY);
+                char typedChar = Utils.getCharFromKey(keyCode, modifiers);
+                if (typedChar != '\0') {
+                    element.charTyped(typedChar);
+                }
+            }
+        }
+    }
 
-    public abstract void mouseReleased(List<Element> elements, double mouseX, double mouseY, int button);
+    public static void mouseDragged(List<Element> elements, double mouseX, double mouseY, int button, double deltaX,
+            double deltaY) {
+        for (Element element : new ArrayList<>(elements)) {
+            element.mouseDragged(mouseX - element.x, mouseY - element.y, button, deltaX, deltaY);
+        }
+    }
+
+    public static void mouseReleased(List<Element> elements, double mouseX, double mouseY, int button) {
+        for (Element element : new ArrayList<>(elements)) {
+            element.mouseReleased(mouseX - element.x, mouseY - element.y, button);
+        }
+    }
 }

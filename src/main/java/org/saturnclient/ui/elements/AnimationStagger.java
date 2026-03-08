@@ -31,7 +31,7 @@ public class AnimationStagger extends Element {
             element.animation.delay = delay * children.size();
         }
 
-        ElementRenderer.INSTANCE.draw(children, element);
+        ElementRenderer.draw(children, element);
 
         this.height = Math.max(this.height, element.y + element.height);
         this.width = Math.max(this.width, element.x + element.width);
@@ -39,28 +39,28 @@ public class AnimationStagger extends Element {
 
     @Override
     public void render(RenderScope renderScope, ElementContext ctx) {
-        ElementRenderer.INSTANCE.render(children, ctx.elapsed, renderScope,
+        ElementRenderer.render(children, ctx.elapsed, renderScope,
                 ctx.mouseX,
                 ctx.mouseY);
     }
 
     @Override
     public void mouseClicked(double mouseX, double mouseY, int button) {
-        ElementRenderer.INSTANCE.mouseClicked(children, mouseX, mouseY, button);
+        ElementRenderer.mouseClicked(children, mouseX, mouseY, button);
     }
 
     @Override
     public void keyPressed(int keyCode, int scanCode, int modifiers) {
-        ElementRenderer.INSTANCE.keyPressed(children, keyCode, scanCode, modifiers);
+        ElementRenderer.keyPressed(children, keyCode, scanCode, modifiers);
     }
 
     @Override
     public void mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY) {
-        ElementRenderer.INSTANCE.mouseDragged(children, mouseX, mouseY, button, deltaX, deltaY);
+        ElementRenderer.mouseDragged(children, mouseX, mouseY, button, deltaX, deltaY);
     }
 
     @Override
     public void mouseReleased(double mouseX, double mouseY, int button) {
-        ElementRenderer.INSTANCE.mouseReleased(children, mouseX, mouseY, button);
+        ElementRenderer.mouseReleased(children, mouseX, mouseY, button);
     }
 }

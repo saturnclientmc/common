@@ -41,7 +41,7 @@ public abstract class SaturnScreen {
     public abstract void ui();
 
     public void draw(Element element) {
-        ElementRenderer.INSTANCE.draw(elements, element);
+        ElementRenderer.draw(elements, element);
     }
 
     // --------------
@@ -53,7 +53,7 @@ public abstract class SaturnScreen {
 
         renderScope.getMatrixStack().scale(0.5f, 0.5f, 0.5f);
 
-        ElementRenderer.INSTANCE.render(new ArrayList<>(elements), elapsed, renderScope, mouseX, mouseY);
+        ElementRenderer.render(new ArrayList<>(elements), elapsed, renderScope, mouseX, mouseY);
 
         renderScope.getMatrixStack().pop();
     }
@@ -66,7 +66,7 @@ public abstract class SaturnScreen {
         mouseX *= 2;
         mouseY *= 2;
 
-        ElementRenderer.INSTANCE.mouseClicked(elements, mouseX, mouseY, button);
+        ElementRenderer.mouseClicked(elements, mouseX, mouseY, button);
 
         return false;
     }
@@ -75,7 +75,7 @@ public abstract class SaturnScreen {
         mouseX *= 2;
         mouseY *= 2;
 
-        ElementRenderer.INSTANCE.mouseDragged(elements, mouseX, mouseY, button, deltaX, deltaY);
+        ElementRenderer.mouseDragged(elements, mouseX, mouseY, button, deltaX, deltaY);
 
         return false;
     }
@@ -84,7 +84,7 @@ public abstract class SaturnScreen {
         mouseX *= 2;
         mouseY *= 2;
 
-        ElementRenderer.INSTANCE.mouseReleased(elements, mouseX, mouseY, button);
+        ElementRenderer.mouseReleased(elements, mouseX, mouseY, button);
 
         return false;
     }
@@ -97,7 +97,7 @@ public abstract class SaturnScreen {
         mouseX *= 2;
         mouseY *= 2;
 
-        ElementRenderer.INSTANCE.mouseScrolled(elements, mouseX, mouseY, horizontalAmount, verticalAmount);
+        ElementRenderer.mouseScrolled(elements, mouseX, mouseY, horizontalAmount, verticalAmount);
 
         return false;
     }
@@ -107,7 +107,7 @@ public abstract class SaturnScreen {
     }
 
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        ElementRenderer.INSTANCE.keyPressed(elements, keyCode, scanCode, modifiers);
+        ElementRenderer.keyPressed(elements, keyCode, scanCode, modifiers);
 
         return false;
     }
