@@ -8,11 +8,7 @@ import java.awt.image.BufferedImage;
 public interface SaturnProvider {
     public abstract MinecraftClientRef getClient();
 
-    public abstract boolean isKeyPressed(int key);
-
     public abstract void registerBufferedImageTexture(IdentifierRef i, BufferedImage bi);
-
-    public abstract String getKeyName(int key);
 
     public abstract void stop();
 }

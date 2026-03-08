@@ -275,7 +275,7 @@ public class Property<T> {
     public boolean isKeyPressed() {
 
         return (Integer) value != -1 &&
-                Providers.saturn.isKeyPressed((Integer) value);
+                Providers.GLFW.isKeyPressed((Integer) value);
     }
 
     public boolean wasKeyPressed() {

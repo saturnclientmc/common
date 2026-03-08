@@ -1,6 +1,10 @@
-package org.saturnclient.config.manager;
+package org.saturnclient.common.provider;
 
-public class Key {
+public interface GLFWProvider {
+    public abstract boolean isKeyPressed(int key);
+
+    public abstract String getKeyName(int key);
+
     /** Printable keys. */
     public static final int GLFW_KEY_SPACE = 32,
             GLFW_KEY_APOSTROPHE = 39,

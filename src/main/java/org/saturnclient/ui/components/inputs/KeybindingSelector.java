@@ -1,8 +1,8 @@
 package org.saturnclient.ui.components.inputs;
 
+import org.saturnclient.common.provider.GLFWProvider;
 import org.saturnclient.common.provider.Providers;
 import org.saturnclient.config.Theme;
-import org.saturnclient.config.manager.Key;
 import org.saturnclient.config.manager.Property;
 import org.saturnclient.ui.Element;
 import org.saturnclient.ui.ElementContext;
@@ -22,7 +22,7 @@ public class KeybindingSelector extends Element {
     public void render(RenderScope renderScope, ElementContext ctx) {
         int textColor = focused ? 0xFFFFFF : 0xAAAAAA;
         renderScope.drawRoundedRectangle(0, 0, width, height, 10, 0xFF000000);
-        String name = Providers.saturn.getKeyName(prop.value);
+        String name = Providers.GLFW.getKeyName(prop.value);
 
         renderScope.drawText(0.6f,
                 prop.value == -1 ? "<NONE>"
@@ -32,7 +32,7 @@ public class KeybindingSelector extends Element {
 
     @Override
     public void keyPressed(int keyCode, int scanCode, int modifiers) {
-        if (keyCode == Key.GLFW_KEY_BACKSPACE) {
+        if (keyCode == GLFWProvider.GLFW_KEY_BACKSPACE) {
             prop.value = -1;
         } else {
             prop.value = keyCode;

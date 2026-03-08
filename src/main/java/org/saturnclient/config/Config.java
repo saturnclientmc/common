@@ -2,10 +2,10 @@ package org.saturnclient.config;
 
 import java.io.File;
 
+import org.saturnclient.common.provider.GLFWProvider;
 import org.saturnclient.common.provider.Providers;
 import org.saturnclient.common.ref.asset.IdentifierRef;
 import org.saturnclient.config.manager.ConfigManager;
-import org.saturnclient.config.manager.Key;
 import org.saturnclient.config.manager.Property;
 import org.saturnclient.ui.resources.Textures;
 
@@ -15,7 +15,7 @@ public class Config {
     public static Property<Boolean> realisticLogo = Property.bool(false);
     public static Property<Boolean> saturnTitleScreen = Property.bool(true);
     public static Property<Boolean> cloakPhysics = Property.bool(true);
-    public static Property<Integer> openEmoteWheel = Property.keybinding(Key.GLFW_KEY_B);
+    public static Property<Integer> openEmoteWheel = Property.keybinding(GLFWProvider.GLFW_KEY_B);
     public static Property<Boolean> stagger = Property.bool(true);
 
     public static IdentifierRef getLogo() {

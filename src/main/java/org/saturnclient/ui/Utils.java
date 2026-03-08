@@ -2,7 +2,7 @@ package org.saturnclient.ui;
 
 import java.util.List;
 
-import org.saturnclient.config.manager.Key;
+import org.saturnclient.common.provider.GLFWProvider;
 
 public class Utils {
     public static boolean isHovering(int mouseX, int mouseY, int elementWidth, int elementHeight, float elementScale) {
@@ -13,36 +13,36 @@ public class Utils {
     }
 
     public static char getCharFromKey(int keyCode, int modifiers) {
-        boolean shift = (modifiers & Key.GLFW_MOD_SHIFT) != 0;
+        boolean shift = (modifiers & GLFWProvider.GLFW_MOD_SHIFT) != 0;
 
         // A-Z
-        if (keyCode >= Key.GLFW_KEY_A && keyCode <= Key.GLFW_KEY_Z) {
+        if (keyCode >= GLFWProvider.GLFW_KEY_A && keyCode <= GLFWProvider.GLFW_KEY_Z) {
             return (char) (shift
-                    ? 'A' + (keyCode - Key.GLFW_KEY_A)
-                    : 'a' + (keyCode - Key.GLFW_KEY_A));
+                    ? 'A' + (keyCode - GLFWProvider.GLFW_KEY_A)
+                    : 'a' + (keyCode - GLFWProvider.GLFW_KEY_A));
         }
 
         // 0-9
-        if (keyCode >= Key.GLFW_KEY_0 && keyCode <= Key.GLFW_KEY_9) {
+        if (keyCode >= GLFWProvider.GLFW_KEY_0 && keyCode <= GLFWProvider.GLFW_KEY_9) {
             return shift
-                    ? ")!@#$%^&*(".charAt(keyCode - Key.GLFW_KEY_0)
-                    : (char) ('0' + (keyCode - Key.GLFW_KEY_0));
+                    ? ")!@#$%^&*(".charAt(keyCode - GLFWProvider.GLFW_KEY_0)
+                    : (char) ('0' + (keyCode - GLFWProvider.GLFW_KEY_0));
         }
 
         // Special characters
         return switch (keyCode) {
-            case Key.GLFW_KEY_SPACE -> ' ';
-            case Key.GLFW_KEY_PERIOD -> shift ? '>' : '.';
-            case Key.GLFW_KEY_COMMA -> shift ? '<' : ',';
-            case Key.GLFW_KEY_MINUS -> shift ? '_' : '-';
-            case Key.GLFW_KEY_EQUAL -> shift ? '+' : '=';
-            case Key.GLFW_KEY_SEMICOLON -> shift ? ':' : ';';
-            case Key.GLFW_KEY_APOSTROPHE -> shift ? '"' : '\'';
-            case Key.GLFW_KEY_SLASH -> shift ? '?' : '/';
-            case Key.GLFW_KEY_BACKSLASH -> shift ? '|' : '\\';
-            case Key.GLFW_KEY_LEFT_BRACKET -> shift ? '{' : '[';
-            case Key.GLFW_KEY_RIGHT_BRACKET -> shift ? '}' : ']';
-            case Key.GLFW_KEY_GRAVE_ACCENT -> shift ? '~' : '`';
+            case GLFWProvider.GLFW_KEY_SPACE -> ' ';
+            case GLFWProvider.GLFW_KEY_PERIOD -> shift ? '>' : '.';
+            case GLFWProvider.GLFW_KEY_COMMA -> shift ? '<' : ',';
+            case GLFWProvider.GLFW_KEY_MINUS -> shift ? '_' : '-';
+            case GLFWProvider.GLFW_KEY_EQUAL -> shift ? '+' : '=';
+            case GLFWProvider.GLFW_KEY_SEMICOLON -> shift ? ':' : ';';
+            case GLFWProvider.GLFW_KEY_APOSTROPHE -> shift ? '"' : '\'';
+            case GLFWProvider.GLFW_KEY_SLASH -> shift ? '?' : '/';
+            case GLFWProvider.GLFW_KEY_BACKSLASH -> shift ? '|' : '\\';
+            case GLFWProvider.GLFW_KEY_LEFT_BRACKET -> shift ? '{' : '[';
+            case GLFWProvider.GLFW_KEY_RIGHT_BRACKET -> shift ? '}' : ']';
+            case GLFWProvider.GLFW_KEY_GRAVE_ACCENT -> shift ? '~' : '`';
             default -> '\0';
         };
     }
@@ -51,12 +51,13 @@ public class Utils {
         return (index >= 0 && index < list.size()) ? list.get(index) : null;
     }
 
-    // public static void notify(NotificationKind kind, String title, String toast) {
-    //     if (SaturnClient.client.currentScreen instanceof SaturnScreen) {
-    //         ((SaturnScreen) SaturnClient.client.currentScreen)
-    //                 .draw(new Notification(SaturnClient.client.currentScreen.width,
-    //                         SaturnClient.client.currentScreen.height, kind,
-    //                         title, toast));
-    //     }
+    // public static void notify(NotificationKind kind, String title, String toast)
+    // {
+    // if (SaturnClient.client.currentScreen instanceof SaturnScreen) {
+    // ((SaturnScreen) SaturnClient.client.currentScreen)
+    // .draw(new Notification(SaturnClient.client.currentScreen.width,
+    // SaturnClient.client.currentScreen.height, kind,
+    // title, toast));
+    // }
     // }
 }
