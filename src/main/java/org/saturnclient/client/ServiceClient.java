@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.saturnclient.client.player.SaturnPlayer;
-import org.saturnclient.common.bindings.SaturnClientBindings;
+import org.saturnclient.common.provider.Providers;
 
 import dev.selimaj.session.Session;
 
@@ -27,30 +27,30 @@ public class ServiceClient {
     }
 
     public static boolean authenticate() {
-        SaturnClientBindings.platform().onClientStopping(() -> {
+        Providers.saturn.onClientStopping(() -> {
             if (session != null) {
                 try {
                     session.close();
                 } catch (Exception e) {
-                    SaturnClientBindings.platform().logError("Unable to close Saturn session", e);
+                    Providers.saturn.logError("Unable to close Saturn session", e);
                 }
             }
         });
 
         try {
-            String accessToken = SaturnClientBindings.platform().getAccessToken();
-            uuid = SaturnClientBindings.platform().getUuid();
-            String username = SaturnClientBindings.platform().getUsername();
+            String accessToken = Providers.saturn.getAccessToken();
+            uuid = Providers.saturn.getUuid();
+            String username = Providers.saturn.getUsername();
 
             if (accessToken == null || uuid == null || username == null) {
-                SaturnClientBindings.platform().logError("No active Minecraft session found");
+                Providers.saturn.logError("No active Minecraft session found");
                 return false;
             }
 
-            SaturnClientBindings.platform().logInfo("Authenticating with UUID: " + uuid);
+            Providers.saturn.logInfo("Authenticating with UUID: " + uuid);
 
             if (!connectTimeout()) {
-                SaturnClientBindings.platform().logError("Unable to authenticate: Session Server Timeout");
+                Providers.saturn.logError("Unable to authenticate: Session Server Timeout");
                 return false;
             }
 
@@ -71,7 +71,7 @@ public class ServiceClient {
 
             return true;
         } catch (Exception e) {
-            SaturnClientBindings.platform().logError("Authentication failed", e);
+            Providers.saturn.logError("Authentication failed", e);
             return false;
         }
     }
@@ -91,7 +91,7 @@ public class ServiceClient {
                 }
             });
         } catch (Exception e) {
-            SaturnClientBindings.platform().logError("Failed to set cloak (service): ", e);
+            Providers.saturn.logError("Failed to set cloak (service): ", e);
         }
     }
 
@@ -110,7 +110,7 @@ public class ServiceClient {
                 }
             });
         } catch (Exception e) {
-            SaturnClientBindings.platform().logError("Failed to set hat (service): ", e);
+            Providers.saturn.logError("Failed to set hat (service): ", e);
         }
     }
 
@@ -124,7 +124,7 @@ public class ServiceClient {
                 }
             });
         } catch (Exception e) {
-            SaturnClientBindings.platform().logError("Failed to buy cloak (service): ", e);
+            Providers.saturn.logError("Failed to buy cloak (service): ", e);
         }
     }
 
@@ -138,7 +138,7 @@ public class ServiceClient {
                 }
             });
         } catch (Exception e) {
-            SaturnClientBindings.platform().logError("Failed to buy hat (service): ", e);
+            Providers.saturn.logError("Failed to buy hat (service): ", e);
         }
     }
 
@@ -152,7 +152,7 @@ public class ServiceClient {
                         }
                     });
         } catch (Exception e) {
-            SaturnClientBindings.platform().logError("Failed to emote (service): ", e);
+            Providers.saturn.logError("Failed to emote (service): ", e);
         }
     }
 
@@ -169,9 +169,9 @@ public class ServiceClient {
             }
 
             if (data.emote() != null && !data.emote().isEmpty()) {
-                SaturnClientBindings.emotes().setEmote(from, data.emote());
+                Providers.saturn.playEmote(from, data.emote());
             } else {
-                SaturnClientBindings.emotes().setEmote(from, null);
+                Providers.saturn.playEmote(from, null);
             }
         });
 
@@ -192,7 +192,7 @@ public class ServiceClient {
                         }
                     });
         } catch (Exception e) {
-            SaturnClientBindings.platform().logError("Failed to get player", e);
+            Providers.saturn.logError("Failed to get player", e);
         }
     }
 }

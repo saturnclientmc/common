@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import org.saturnclient.common.bindings.SaturnClientBindings;
+import org.saturnclient.client.ServiceClient;
 
 public class SaturnPlayer {
     private static Map<UUID, SaturnPlayer> PLAYERS = new HashMap<>();
@@ -23,11 +23,10 @@ public class SaturnPlayer {
     }
 
     public static SaturnPlayer get() {
-        UUID self = SaturnClientBindings.platform().getUuid();
-        if (self == null) {
+        if (ServiceClient.uuid == null) {
             return null;
         }
-        return PLAYERS.get(self);
+        return PLAYERS.get(ServiceClient.uuid);
     }
 
     public static SaturnPlayer get(UUID uuid) {
@@ -47,8 +46,8 @@ public class SaturnPlayer {
     }
 
     public static String[] getExternalUUIDAsString() {
-        UUID self = SaturnClientBindings.platform().getUuid();
-        return PLAYERS.keySet().stream().filter(id -> self == null || !id.equals(self)).map(UUID::toString)
+        return PLAYERS.keySet().stream().filter(id -> ServiceClient.uuid == null || !id.equals(ServiceClient.uuid))
+                .map(UUID::toString)
                 .toArray(String[]::new);
     }
 

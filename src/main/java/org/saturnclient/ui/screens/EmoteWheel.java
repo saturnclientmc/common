@@ -2,7 +2,7 @@ package org.saturnclient.ui.screens;
 
 import org.saturnclient.cosmetics.Emotes;
 import org.saturnclient.client.ServiceClient;
-import org.saturnclient.common.bindings.SaturnClientBindings;
+import org.saturnclient.common.provider.Providers;
 import org.saturnclient.config.AnimationConfig;
 import org.saturnclient.config.Config;
 import org.saturnclient.ui.SaturnScreen;
@@ -82,9 +82,7 @@ public class EmoteWheel extends SaturnScreen {
 
             emoteStagger.draw(
                     new TextureButton(Textures.getEmotePreview(emote), () -> {
-                        if (emote != null)
-                            SaturnClientBindings.emotes().setEmote(ServiceClient.uuid, emote);
-
+                        Providers.saturn.playEmote(ServiceClient.uuid, emote);
                         provider.close();
                     })
                             .dimensions(70, 70)
