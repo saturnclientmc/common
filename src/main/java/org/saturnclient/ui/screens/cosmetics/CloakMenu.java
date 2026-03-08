@@ -3,6 +3,7 @@ package org.saturnclient.ui.screens.cosmetics;
 import org.saturnclient.client.player.SaturnPlayer;
 import org.saturnclient.common.provider.Providers;
 import org.saturnclient.config.AnimationConfig;
+import org.saturnclient.cosmetics.Cloaks;
 import org.saturnclient.ui.SaturnScreen;
 import org.saturnclient.ui.anim.Fade;
 import org.saturnclient.ui.anim.SlideY;
@@ -35,23 +36,23 @@ public class CloakMenu extends SaturnScreen {
         AnimationStagger stagger = new AnimationStagger(AnimationConfig.cosmeticsMenu);
 
         if (player != null) {
-            // for (String cloak : Cloaks.availableCloaks) {
+            for (String cloak : Cloaks.availableCloaks) {
 
-            // stagger.draw(
-            // new CosmeticPreview(
-            // cloak == player.cloak,
-            // Textures.getCloakPreview(cloak),
-            // () -> Cloaks.setCloak(cloak))
-            // .position((50 + g) * col, (111 + g) * row)
-            // .animation(new SlideY(AnimationConfig.cosmeticsMenu, 14)));
+                stagger.draw(
+                        new CosmeticPreview(
+                                cloak == player.cloak,
+                                Textures.getCloakPreview(cloak),
+                                () -> Cloaks.setCloak(cloak))
+                                .position((50 + g) * col, (111 + g) * row)
+                                .animation(new SlideY(AnimationConfig.cosmeticsMenu, 14)));
 
-            // if (col == 5) {
-            // col = 0;
-            // row++;
-            // } else {
-            // col++;
-            // }
-            // }
+                if (col == 5) {
+                    col = 0;
+                    row++;
+                } else {
+                    col++;
+                }
+            }
         }
 
         scroll.draw(stagger);

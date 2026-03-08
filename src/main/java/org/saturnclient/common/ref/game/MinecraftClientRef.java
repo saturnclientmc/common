@@ -34,4 +34,6 @@ public interface MinecraftClientRef {
     public void onClientStopping(Runnable handler);
 
     public void scheduleStop();
+
+   public void executeOnThread(Runnable runnable);
 }

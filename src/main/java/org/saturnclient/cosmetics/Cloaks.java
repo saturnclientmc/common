@@ -103,7 +103,7 @@ public class Cloaks {
                             });
 
                 } else {
-                    // SaturnClient.client.execute(() -> loadStaticCloak(player.cloak + ".png"));
+                    Providers.saturn.getClient().executeOnThread(() -> loadStaticCloak(player.cloak + ".png"));
                 }
             }
         }
