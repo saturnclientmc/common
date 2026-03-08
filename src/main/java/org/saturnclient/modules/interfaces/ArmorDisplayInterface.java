@@ -23,10 +23,4 @@ public interface ArmorDisplayInterface {
     ItemStackRef getDummyLeggings();
 
     ItemStackRef getDummyBoots();
-
-    boolean isEmpty(ItemStackRef stack);
-
-    int getMaxDamage(ItemStackRef stack);
-
-    int getDamage(ItemStackRef stack);
 }

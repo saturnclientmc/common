@@ -103,7 +103,7 @@ public class HatStore extends SaturnScreen {
 
         draw(new TabMenu(1,
                 new TabMenuComponent(Textures.CLOAK, () -> {
-                    Providers.saturn.setScreen(new CloakStore());
+                    Providers.saturn.getClient().setScreen(new CloakStore());
                 }),
                 new TabMenuComponent(Textures.HAT, () -> {
                 }))

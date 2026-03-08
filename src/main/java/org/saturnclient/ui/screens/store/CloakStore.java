@@ -104,7 +104,7 @@ public class CloakStore extends SaturnScreen {
                 new TabMenuComponent(Textures.CLOAK, () -> {
                 }),
                 new TabMenuComponent(Textures.HAT, () -> {
-                    Providers.saturn.setScreen(new HatStore());
+                    Providers.saturn.getClient().setScreen(new HatStore());
                 }))
                 .centerOffset(width, height, 0, -195));
     }

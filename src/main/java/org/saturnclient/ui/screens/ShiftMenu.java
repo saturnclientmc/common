@@ -41,17 +41,17 @@ public class ShiftMenu extends SaturnScreen {
         AnimationStagger stagger = new AnimationStagger(AnimationConfig.shiftMenu.stagger.value);
 
         stagger.draw(new TextureButton(Textures.HUD_ICON, () -> {
-            Providers.saturn.setScreen(new HudEditor());
+            Providers.saturn.getClient().setScreen(new HudEditor());
         }).dimensions(btnHeight, btnHeight).position(0, 0)
                 .animation(new Fade(AnimationConfig.shiftMenu)));
 
         stagger.draw(new Button("Settings", () -> {
-            Providers.saturn.setScreen(new ModMenu());
+            Providers.saturn.getClient().setScreen(new ModMenu());
         }).dimensions(btnWidth, btnHeight).position(btnHeight + spacing, 0)
                 .animation(new Fade(AnimationConfig.shiftMenu)));
 
         stagger.draw(new TextureButton(Textures.COSMETICS, () -> {
-            Providers.saturn.setScreen(new CloakMenu());
+            Providers.saturn.getClient().setScreen(new CloakMenu());
         }).dimensions(btnHeight, btnHeight).position(btnWidth + btnHeight + (spacing * 2), 0)
                 .animation(new Fade(AnimationConfig.shiftMenu)));
 

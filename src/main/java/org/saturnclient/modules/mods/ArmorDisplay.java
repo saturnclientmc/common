@@ -38,33 +38,33 @@ public class ArmorDisplay extends Module implements HudMod {
 
         int row = 0;
 
-        if (useMainHand.value && !minecraft.isEmpty(mainHand)) {
+        if (useMainHand.value && !mainHand.isEmpty()) {
             scope.drawItem(mainHand, 0, 15 * row);
-            renderHealth(scope, row, minecraft.getMaxDamage(mainHand), minecraft.getDamage(mainHand));
+            renderHealth(scope, row, mainHand.getMaxDamage(), mainHand.getDamage());
             row++;
         }
 
-        if (!minecraft.isEmpty(helmet)) {
+        if (!helmet.isEmpty()) {
             scope.drawItem(helmet, 0, 15 * row);
-            renderHealth(scope, row, minecraft.getMaxDamage(helmet), minecraft.getDamage(helmet));
+            renderHealth(scope, row, helmet.getMaxDamage(), helmet.getDamage());
             row++;
         }
 
-        if (!minecraft.isEmpty(chestplate)) {
+        if (!chestplate.isEmpty()) {
             scope.drawItem(chestplate, 0, 15 * row);
-            renderHealth(scope, row, minecraft.getMaxDamage(chestplate), minecraft.getDamage(chestplate));
+            renderHealth(scope, row, chestplate.getMaxDamage(), chestplate.getDamage());
             row++;
         }
 
-        if (!minecraft.isEmpty(leggings)) {
+        if (!leggings.isEmpty()) {
             scope.drawItem(leggings, 0, 15 * row);
-            renderHealth(scope, row, minecraft.getMaxDamage(leggings), minecraft.getDamage(leggings));
+            renderHealth(scope, row, leggings.getMaxDamage(), leggings.getDamage());
             row++;
         }
 
-        if (!minecraft.isEmpty(boots)) {
+        if (!boots.isEmpty()) {
             scope.drawItem(boots, 0, 15 * row);
-            renderHealth(scope, row, minecraft.getMaxDamage(boots), minecraft.getDamage(boots));
+            renderHealth(scope, row, boots.getMaxDamage(), boots.getDamage());
             row++;
         }
     }
