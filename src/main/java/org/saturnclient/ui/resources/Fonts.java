@@ -30,7 +30,7 @@ public class Fonts {
     public static int getWidth(String text, int font) {
         int w = 0;
         for (String line : text.split("\n")) {
-            w = Math.max(w, getWidth(line, setFont(text, font).getWidth()));
+            w = Math.max(w, setFont(line, font).getWidth());
         }
 
         if (font == 0) {
