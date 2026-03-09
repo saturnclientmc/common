@@ -8,7 +8,11 @@ import org.saturnclient.feature.features.*;
 public class FeatureManager {
     public static List<Feature> ENABLED_MODS = new ArrayList<>();
     public static Feature[] MODS = {
-            new ArmorDisplayFeature()
+            new ArmorDisplayFeature(), new DayCounterFeature(), new KeystrokesFeature(), new StatusEffectsFeature(),
+            new AutoSprintFeature(), new FpsFeature(), new NametagsFeature(), new TpsFeature(),
+            new ClockFeature(), new FreelookFeature(), new NoFogFeature(), new ZoomFeature(),
+            new CoordinatesFeature(), new FullbrightFeature(), new PingFeature(),
+            new CrosshairFeature(), new HealthDisplayFeature(), new SpeedometerFeature(),
     };
 
     public static void init() {
