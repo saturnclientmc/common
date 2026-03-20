@@ -1,7 +1,7 @@
 package org.saturnclient.ui.components.inputs;
 
-import org.saturnclient.config.manager.ConfigManager;
-import org.saturnclient.config.manager.Property;
+import org.saturnclient.config.ConfigManager;
+import org.saturnclient.config.property.Property;
 import org.saturnclient.ui.resources.Fonts;
 
 public class IntInput extends Input {

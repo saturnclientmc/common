@@ -1,6 +1,6 @@
 package org.saturnclient.feature.features;
 
-import org.saturnclient.config.manager.Property;
+import org.saturnclient.config.property.Property;
 import org.saturnclient.feature.Feature;
 import org.saturnclient.feature.FeatureDetails;
 

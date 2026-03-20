@@ -1,7 +1,7 @@
 package org.saturnclient.feature.features;
 
 import org.saturnclient.common.provider.Providers;
-import org.saturnclient.config.manager.Property;
+import org.saturnclient.config.property.Property;
 import org.saturnclient.ui.RenderScope;
 import org.saturnclient.ui.resources.Fonts;
 import org.saturnclient.feature.Feature;

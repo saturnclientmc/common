@@ -1,4 +1,4 @@
-package org.saturnclient.config.manager;
+package org.saturnclient.config.property;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;

@@ -1,7 +1,7 @@
 package org.saturnclient.ui.screens;
 
 import org.saturnclient.common.ref.render.MatrixStackRef;
-import org.saturnclient.config.manager.ConfigManager;
+import org.saturnclient.config.ConfigManager;
 import org.saturnclient.feature.HudFeature;
 import org.saturnclient.feature.FeatureLayout;
 import org.saturnclient.feature.FeatureManager;

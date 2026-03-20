@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.saturnclient.common.provider.Providers;
 import org.saturnclient.common.ref.asset.SpriteRef;
-import org.saturnclient.config.manager.Property;
+import org.saturnclient.config.property.Property;
 import org.saturnclient.ui.RenderScope;
 import org.saturnclient.feature.Feature;
 import org.saturnclient.feature.FeatureDetails;

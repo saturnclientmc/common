@@ -1,7 +1,6 @@
 package org.saturnclient.config;
 
-import org.saturnclient.config.manager.ConfigManager;
-import org.saturnclient.config.manager.Property;
+import org.saturnclient.config.property.Property;
 
 public class AnimationConfig {
     public static ConfigManager config;

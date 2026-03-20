@@ -3,7 +3,7 @@ package org.saturnclient.feature.features;
 import org.saturnclient.common.provider.Providers;
 import org.saturnclient.common.module.PlayerModule;
 import org.saturnclient.common.ref.game.ItemStackRef;
-import org.saturnclient.config.manager.Property;
+import org.saturnclient.config.property.Property;
 import org.saturnclient.feature.Feature;
 import org.saturnclient.feature.FeatureDetails;
 import org.saturnclient.feature.FeatureLayout;

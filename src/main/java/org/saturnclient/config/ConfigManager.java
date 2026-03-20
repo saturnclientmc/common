@@ -1,4 +1,4 @@
-package org.saturnclient.config.manager;
+package org.saturnclient.config;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +9,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.saturnclient.config.property.Property;
 
 public class ConfigManager {
 

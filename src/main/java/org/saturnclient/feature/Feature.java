@@ -1,8 +1,8 @@
 package org.saturnclient.feature;
 
 import org.saturnclient.common.ref.asset.IdentifierRef;
-import org.saturnclient.config.manager.ConfigManager;
-import org.saturnclient.config.manager.Property.NamedProperty;
+import org.saturnclient.config.ConfigManager;
+import org.saturnclient.config.property.Property.NamedProperty;
 import org.saturnclient.ui.RenderScope;
 import org.saturnclient.ui.resources.Textures;
 

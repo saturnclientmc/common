@@ -3,7 +3,7 @@ package org.saturnclient.ui.components.inputs;
 import org.saturnclient.common.provider.GLFWProvider;
 import org.saturnclient.common.provider.Providers;
 import org.saturnclient.config.Theme;
-import org.saturnclient.config.manager.Property;
+import org.saturnclient.config.property.Property;
 import org.saturnclient.ui.Element;
 import org.saturnclient.ui.ElementContext;
 import org.saturnclient.ui.RenderScope;

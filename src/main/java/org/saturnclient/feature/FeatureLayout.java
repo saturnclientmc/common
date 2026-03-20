@@ -2,8 +2,8 @@ package org.saturnclient.feature;
 
 import java.util.Map;
 
-import org.saturnclient.config.manager.Property;
-import org.saturnclient.config.manager.Property.NamedProperty;
+import org.saturnclient.config.property.Property;
+import org.saturnclient.config.property.Property.NamedProperty;
 
 public class FeatureLayout {
     public Property<Integer> x = Property.integer(0);

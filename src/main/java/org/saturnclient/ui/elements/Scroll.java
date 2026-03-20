@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.saturnclient.config.Theme;
-import org.saturnclient.config.manager.Property;
+import org.saturnclient.config.property.Property;
 import org.saturnclient.ui.Element;
 import org.saturnclient.ui.ElementContext;
 import org.saturnclient.ui.ElementRenderer;

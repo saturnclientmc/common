@@ -3,9 +3,9 @@ package org.saturnclient.feature.features;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import org.saturnclient.config.manager.Property;
 import org.saturnclient.ui.RenderScope;
 import org.saturnclient.ui.resources.Fonts;
+import org.saturnclient.config.property.Property;
 import org.saturnclient.feature.Feature;
 import org.saturnclient.feature.FeatureDetails;
 import org.saturnclient.feature.FeatureLayout;
