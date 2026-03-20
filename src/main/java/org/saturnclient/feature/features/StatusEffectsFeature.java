@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.saturnclient.common.provider.ModuleProvider;
 import org.saturnclient.common.provider.Providers;
-import org.saturnclient.common.ref.asset.SpriteRef;
+import org.saturnclient.common.ref.game.EffectRef;
 import org.saturnclient.config.property.BoolProperty;
 import org.saturnclient.config.property.Property;
 import org.saturnclient.ui.RenderScope;
@@ -38,26 +38,6 @@ public class StatusEffectsFeature extends Feature implements HudFeature {
     }
 
     // ---------------------------------------------------------------
-    // Effect data contract (inner interface keeps things self-contained)
-    // ---------------------------------------------------------------
-
-    /**
-     * Minimal view of a single active status effect.
-     * Implementations are provided by the platform bridge.
-     */
-    public interface EffectView {
-        boolean shouldShowIcon();
-
-        SpriteRef getIcon();
-
-        boolean isInfinite();
-
-        String getInfiniteText();
-
-        int getDurationSeconds();
-    }
-
-    // ---------------------------------------------------------------
     // HudFeature
     // ---------------------------------------------------------------
 
@@ -75,10 +55,10 @@ public class StatusEffectsFeature extends Feature implements HudFeature {
     // Rendering
     // ---------------------------------------------------------------
 
-    private void renderEffects(RenderScope scope, List<? extends EffectView> effects) {
+    private void renderEffects(RenderScope scope, List<? extends EffectRef> effects) {
         int row = 0;
 
-        for (EffectView effect : effects) {
+        for (EffectRef effect : effects) {
             if (!effect.shouldShowIcon())
                 continue;
 
@@ -92,7 +72,7 @@ public class StatusEffectsFeature extends Feature implements HudFeature {
         layout.height = 18 * row;
     }
 
-    private static String durationString(EffectView effect) {
+    private static String durationString(EffectRef effect) {
         if (effect.isInfinite())
             return effect.getInfiniteText();
 

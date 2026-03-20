@@ -2,8 +2,8 @@ package org.saturnclient.common.module;
 
 import java.util.List;
 
+import org.saturnclient.common.ref.game.EffectRef;
 import org.saturnclient.common.ref.game.ItemStackRef;
-import org.saturnclient.feature.features.StatusEffectsFeature;
 
 /**
  * PlayerModule provides access to the state of the local player.
@@ -93,13 +93,13 @@ public interface PlayerModule {
      * Returns a list of the player’s currently active effects.
      * Safe default: empty list if no player is present.
      */
-    List<? extends StatusEffectsFeature.EffectView> getActiveEffects();
+    List<? extends EffectRef> getActiveEffects();
 
     /**
      * Returns a list of dummy effects used in HUD editor / preview mode.
      * Safe default: empty list.
      */
-    List<? extends StatusEffectsFeature.EffectView> getDummyEffects();
+    List<? extends EffectRef> getDummyEffects();
 
     // ---------------------------------------------------------------
     // Inventory / equipment
