@@ -4,7 +4,14 @@ import java.util.Map;
 
 import org.saturnclient.config.ConfigManager;
 import org.saturnclient.config.Theme;
+import org.saturnclient.config.property.BoolProperty;
+import org.saturnclient.config.property.ColorProperty;
+import org.saturnclient.config.property.FloatProperty;
+import org.saturnclient.config.property.IntProperty;
+import org.saturnclient.config.property.KeybindingProperty;
+import org.saturnclient.config.property.NamespaceProperty;
 import org.saturnclient.config.property.Property;
+import org.saturnclient.config.property.SelectProperty;
 import org.saturnclient.ui.SaturnScreen;
 import org.saturnclient.ui.components.Sidebar;
 import org.saturnclient.ui.components.inputs.FloatInput;
@@ -42,10 +49,9 @@ public class ConfigEditor extends SaturnScreen {
         draw(new Sidebar(1, this.provider::close).centerOffset(width, height, -(scrollWidth / 2 + 20), 0));
     }
 
-    @SuppressWarnings("unchecked")
-    private int drawProperties(Scroll configScroll, Map<String, Property<?>> properties, int row, int col, int w) {
-        for (Map.Entry<String, Property<?>> propEntry : properties.entrySet()) {
-            Property<?> prop = propEntry.getValue();
+    private int drawProperties(Scroll configScroll, Map<String, Property> properties, int row, int col, int w) {
+        for (Map.Entry<String, Property> propEntry : properties.entrySet()) {
+            Property prop = propEntry.getValue();
             String propName = propEntry.getKey();
             boolean full = isFull(prop);
 
@@ -58,52 +64,62 @@ public class ConfigEditor extends SaturnScreen {
             int modX = (w / 2) * col; // two-column layout
             int modY = 25 * row;
 
-            if (prop.getType() == Property.PropertyType.NAMESPACE) {
+            if (prop instanceof NamespaceProperty) {
                 configScroll.draw(
-                        new Text(
-                                propName).position(Fonts.centerX(520, propName, Theme.FONT.value), modY + 1)
+                        new Text(propName)
+                                .position(Fonts.centerX(520, propName, Theme.FONT.value), modY + 1)
                                 .scale(0.7f));
             } else {
                 configScroll.draw(
-                        new Text(
-                                propName).position(modX, modY + 1).scale(0.7f));
+                        new Text(propName)
+                                .position(modX, modY + 1)
+                                .scale(0.7f));
             }
 
-            switch (prop.getType()) {
-                case BOOLEAN:
-                    configScroll.draw(
-                            new Toggle((Property<Boolean>) prop)
-                                    .position(modX + (w / 2) - 40, modY)
-                                    .scale(0.5f));
-                    break;
-
-                case HEX:
-                    configScroll.draw(new ColorInput((Property<Integer>) prop).position(w / 2, modY));
-                    break;
-
-                case INTEGER:
-                    configScroll.draw(new IntInput((Property<Integer>) prop).position(w / 2, modY));
-                    break;
-
-                case FLOAT:
-                    configScroll.draw(new FloatInput((Property<Float>) prop).position(w / 2, modY));
-                    break;
-
-                case NAMESPACE:
-                    Map<String, Property<?>> nestedProperties = (Map<String, Property<?>>) prop.value;
-                    row = drawProperties(configScroll, nestedProperties, row + 1, col, w);
-                    break;
-
-                case SELECT:
-                    configScroll.draw(new Select((Property<Integer>) prop).position(w / 2, modY));
-                    break;
-
-                case KEYBINDING:
-                    configScroll.draw(new KeybindingSelector((Property<Integer>) prop).position(w / 2, modY));
-                    break;
-
-                case STRING:
+            // instanceof dispatch
+            if (prop instanceof BoolProperty p) {
+                configScroll.draw(
+                        new Toggle(p)
+                                .position(modX + (w / 2) - 40, modY)
+                                .scale(0.5f));
             }
+
+            else if (prop instanceof ColorProperty p) {
+                configScroll.draw(
+                        new ColorInput(p)
+                                .position(w / 2, modY));
+            }
+
+            else if (prop instanceof IntProperty p) {
+                configScroll.draw(
+                        new IntInput(p)
+                                .position(w / 2, modY));
+            }
+
+            else if (prop instanceof FloatProperty p) {
+                configScroll.draw(
+                        new FloatInput(p)
+                                .position(w / 2, modY));
+            }
+
+            else if (prop instanceof NamespaceProperty p) {
+                Map<String, Property> nestedProperties = p.value;
+                row = drawProperties(configScroll, nestedProperties, row + 1, col, w);
+            }
+
+            else if (prop instanceof SelectProperty p) {
+                configScroll.draw(
+                        new Select(p)
+                                .position(w / 2, modY));
+            }
+
+            else if (prop instanceof KeybindingProperty p) {
+                configScroll.draw(
+                        new KeybindingSelector(p)
+                                .position(w / 2, modY));
+            }
+
+            // STRING → intentionally no component (same as before)
 
             if (full) {
                 row++; // full-width takes a whole row
@@ -120,12 +136,7 @@ public class ConfigEditor extends SaturnScreen {
         return row;
     }
 
-    public static boolean isFull(Property<?> prop) {
-        switch (prop.getType()) {
-            case BOOLEAN:
-                return false;
-            default:
-                return true;
-        }
+    public static boolean isFull(Property prop) {
+        return prop instanceof BoolProperty;
     }
 }
