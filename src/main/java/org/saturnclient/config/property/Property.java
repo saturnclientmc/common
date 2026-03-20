@@ -8,17 +8,7 @@ import java.util.Map;
 
 import org.saturnclient.common.provider.Providers;
 
-public class Property<T> {
-
-    public static class NamedProperty<T> {
-        public String name;
-        public Property<T> prop;
-
-        public NamedProperty(String name, Property<T> value) {
-            this.name = name;
-            this.prop = value;
-        }
-    }
+public abstract class Property {
 
     public enum PropertyType {
         BOOLEAN,
@@ -31,116 +21,54 @@ public class Property<T> {
         KEYBINDING,
     }
 
-    public T value;
     public boolean isReset = false;
-    private T defaultValue;
-    private String[] availableValues;
-    private final PropertyType type;
-    private boolean wasPressedLastTick = false;
-
-    private Property(T value, PropertyType type) {
-        this.value = value;
-        this.defaultValue = value;
-        this.type = type;
-    }
 
     // ---------- Factory Methods ----------
 
-    public static <T> Property<T> from(T value) {
-        if (value instanceof Boolean)
-            return new Property<>(value, PropertyType.BOOLEAN);
-        if (value instanceof Integer)
-            return new Property<>(value, PropertyType.INTEGER);
-        if (value instanceof Float)
-            return new Property<>(value, PropertyType.FLOAT);
-        if (value instanceof String)
-            return new Property<>(value, PropertyType.STRING);
-        if (valueIsNamespace(value))
-            return new Property<>(value, PropertyType.NAMESPACE);
-        return null;
+    public static NamespaceProperty namespace(Map<String, Property> value) {
+        return new NamespaceProperty(value);
     }
 
-    public static Property<Integer> font(int value) {
+    public static BoolProperty bool(boolean value) {
+        return new BoolProperty(value);
+    }
+
+    public static IntProperty integer(int value) {
+        return new IntProperty(value);
+    }
+
+    public static FloatProperty floatProp(float value) {
+        return new FloatProperty(value);
+    }
+
+    public static StringProperty string(String value) {
+        return new StringProperty(value);
+    }
+
+    public static ColorProperty color(int value) {
+        return new ColorProperty(value);
+    }
+
+    public static KeybindingProperty keybinding(int value) {
+        return new KeybindingProperty(value);
+    }
+
+    public static SelectProperty font(int value) {
         return select(value, "Default", "Inter", "Inter bold");
     }
 
-    public static Property<Integer> select(Integer value, String... availableValues) {
-        Property<Integer> property = new Property<>(value, PropertyType.SELECT);
-        property.availableValues = availableValues;
-        return property;
+    public static SelectProperty select(Integer value, String... availableValues) {
+        return new SelectProperty(value, availableValues);
     }
 
-    public static Property<Map<String, Property<?>>> namespace(Map<String, Property<?>> value) {
-        return new Property<>(value, PropertyType.NAMESPACE);
+    // ---------- Utility ----------
+
+    public NamedProperty named(String name) {
+        return new NamedProperty(name, this);
     }
-
-    public static Property<Boolean> bool(boolean value) {
-        return new Property<>(value, PropertyType.BOOLEAN);
-    }
-
-    public static Property<Integer> integer(int value) {
-        return new Property<>(value, PropertyType.INTEGER);
-    }
-
-    public static Property<Float> floatProp(float value) {
-        return new Property<>(value, PropertyType.FLOAT);
-    }
-
-    public static Property<String> string(String value) {
-        return new Property<>(value, PropertyType.STRING);
-    }
-
-    public static Property<Integer> color(int value) {
-        return new Property<>(value, PropertyType.HEX);
-    }
-
-    public static Property<Integer> keybinding(int value) {
-        return new Property<>(value, PropertyType.KEYBINDING);
-    }
-
-    // ---------- Select Helpers ----------
-
-    public void next() {
-        if (type == PropertyType.SELECT) {
-            int i = (Integer) value;
-            setValue((i < availableValues.length - 1) ? i + 1 : 0);
-        }
-    }
-
-    public void prev() {
-        if (type == PropertyType.SELECT) {
-            int i = (Integer) value;
-            setValue((i > 0) ? i - 1 : availableValues.length - 1);
-        }
-    }
-
-    public void setSelection(int selection) {
-        if (type == PropertyType.SELECT && selection >= 0 && selection < availableValues.length) {
-            setValue(selection);
-        }
-    }
-
-    public String getSelection() {
-        return (type == PropertyType.SELECT) ? availableValues[(Integer) value] : null;
-    }
-
-    // ---------- Lifecycle ----------
 
     public void reset() {
-        value = defaultValue;
         isReset = true;
-    }
-
-    public PropertyType getType() {
-        return type;
-    }
-
-    @SuppressWarnings("unchecked")
-    public Map<String, Property<?>> getNamespaceValue() {
-        if (type == PropertyType.NAMESPACE && value instanceof Map) {
-            return (Map<String, Property<?>>) value;
-        }
-        throw new IllegalStateException("Property is not a namespace");
     }
 
     // ---------- JSON Serialization ----------
@@ -242,80 +170,5 @@ public class Property<T> {
                     setValue(element.intValue());
                 break;
         }
-    }
-
-    // ---------- Utility ----------
-
-    @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    public static boolean valueIsNamespace(Object obj) {
-        return obj instanceof Map;
-    }
-
-    @SuppressWarnings("unchecked")
-    public void setValue(Object value) {
-        this.value = (T) value;
-    }
-
-    @SuppressWarnings("unchecked")
-    public void setValue(Object value, Object defaultValue) {
-        this.value = (T) value;
-        this.defaultValue = (T) defaultValue;
-    }
-
-    public NamedProperty<T> named(String name) {
-        return new NamedProperty<>(name, this);
-    }
-
-    // ---------- Keybindings (no SaturnClient) ----------
-
-    public boolean isKeyPressed() {
-
-        return (Integer) value != -1 &&
-                Providers.GLFW.isKeyPressed((Integer) value);
-    }
-
-    public boolean wasKeyPressed() {
-        boolean pressed = isKeyPressed();
-
-        boolean result = pressed && !wasPressedLastTick;
-
-        wasPressedLastTick = pressed;
-
-        return result;
-    }
-
-    // ---------- HEX ----------
-
-    public static int parseHexToInt(String hex) {
-
-        hex = hex.replace("#", "");
-
-        if (hex.length() == 6)
-            hex = "FF" + hex;
-
-        if (hex.length() != 8)
-            throw new IllegalArgumentException(
-                    "Hex must be 6 or 8 chars long, got '" + hex + "'");
-
-        return (int) Long.parseLong(hex, 16);
-    }
-
-    // ---------- Misc ----------
-
-    public Property<T> copy() {
-        return new Property<>(this.value, this.type);
-    }
-
-    public boolean isNamespace() {
-        return type == PropertyType.NAMESPACE;
-    }
-
-    @SuppressWarnings("unchecked")
-    public Map<String, Property<?>> getNamespaceMap() {
-        return isNamespace() ? (Map<String, Property<?>>) value : null;
     }
 }
