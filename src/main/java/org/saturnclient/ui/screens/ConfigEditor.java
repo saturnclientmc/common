@@ -137,6 +137,6 @@ public class ConfigEditor extends SaturnScreen {
     }
 
     public static boolean isFull(Property prop) {
-        return prop instanceof BoolProperty;
+        return !(prop instanceof BoolProperty);
     }
 }
