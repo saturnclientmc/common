@@ -1,7 +1,7 @@
 package org.saturnclient.config.property;
 
-public class StringProperty {
-    public final String value;
+public class StringProperty extends Property {
+    public String value;
     public final String defaultValue;
 
     public StringProperty(String defaultValue) {

@@ -2,8 +2,8 @@ package org.saturnclient.config.property;
 
 import org.saturnclient.common.provider.Providers;
 
-public class KeybindingProperty {
-    public final int value;
+public class KeybindingProperty extends Property {
+    public int value;
     public final int defaultValue;
     public boolean wasPressedLastTick = false;
 

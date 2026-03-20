@@ -1,7 +1,7 @@
 package org.saturnclient.config.property;
 
 public class IntProperty extends Property {
-    public final int value;
+    public int value;
     public final int defaultValue;
 
     public IntProperty(int defaultValue) {

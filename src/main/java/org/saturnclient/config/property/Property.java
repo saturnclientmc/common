@@ -6,8 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.util.Map;
 
-import org.saturnclient.common.provider.Providers;
-
 public abstract class Property {
 
     public enum PropertyType {
@@ -75,41 +73,46 @@ public abstract class Property {
 
     public JsonNode toJson() {
 
-        switch (type) {
-
-            case BOOLEAN:
-                return JsonNodeFactory.instance.booleanNode((Boolean) value);
-
-            case INTEGER:
-                return JsonNodeFactory.instance.numberNode((Integer) value);
-
-            case FLOAT:
-                return JsonNodeFactory.instance.numberNode((Float) value);
-
-            case STRING:
-                return JsonNodeFactory.instance.textNode((String) value);
-
-            case HEX:
-                return JsonNodeFactory.instance.textNode(
-                        String.format("#%08X", (Integer) value));
-
-            case KEYBINDING:
-            case SELECT:
-                return JsonNodeFactory.instance.numberNode((Integer) value);
-
-            case NAMESPACE:
-
-                ObjectNode nested = JsonNodeFactory.instance.objectNode();
-
-                getNamespaceValue().forEach((k, v) -> {
-                    nested.set(k, v.toJson());
-                });
-
-                return nested;
-
-            default:
-                return JsonNodeFactory.instance.textNode(String.valueOf(value));
+        if (this instanceof BoolProperty p) {
+            return JsonNodeFactory.instance.booleanNode(p.value);
         }
+
+        if (this instanceof IntProperty p) {
+            return JsonNodeFactory.instance.numberNode(p.value);
+        }
+
+        if (this instanceof FloatProperty p) {
+            return JsonNodeFactory.instance.numberNode(p.value);
+        }
+
+        if (this instanceof StringProperty p) {
+            return JsonNodeFactory.instance.textNode(p.value);
+        }
+
+        if (this instanceof ColorProperty p) {
+            return JsonNodeFactory.instance.textNode(
+                    String.format("#%08X", p.value));
+        }
+
+        if (this instanceof KeybindingProperty p) {
+            return JsonNodeFactory.instance.numberNode(p.value);
+        }
+
+        if (this instanceof SelectProperty p) {
+            return JsonNodeFactory.instance.numberNode(p.value);
+        }
+
+        if (this instanceof NamespaceProperty p) {
+            ObjectNode nested = JsonNodeFactory.instance.objectNode();
+
+            p.value.forEach((k, v) -> {
+                nested.set(k, v.toJson());
+            });
+
+            return nested;
+        }
+
+        return null;
     }
 
     public void loadFromJson(JsonNode element) {
@@ -117,58 +120,58 @@ public abstract class Property {
         if (element == null)
             return;
 
-        switch (type) {
+        if (this instanceof BoolProperty p) {
+            if (element.isBoolean())
+                p.value = element.booleanValue();
+            return;
+        }
 
-            case BOOLEAN:
-                if (element.isBoolean())
-                    setValue(element.booleanValue());
-                break;
+        if (this instanceof IntProperty p) {
+            if (element.isInt())
+                p.value = element.intValue();
+            else if (element.isTextual())
+                p.value = ColorProperty.parseHexToInt(element.textValue());
+            return;
+        }
 
-            case INTEGER:
-                if (element.isInt())
-                    setValue(element.intValue());
-                else if (element.isTextual())
-                    setValue(parseHexToInt(element.textValue()));
-                break;
+        if (this instanceof FloatProperty p) {
+            if (element.isNumber())
+                p.value = element.floatValue();
+            return;
+        }
 
-            case FLOAT:
-                if (element.isNumber())
-                    setValue(element.floatValue());
-                break;
+        if (this instanceof StringProperty p) {
+            if (element.isTextual())
+                p.value = element.textValue();
+            return;
+        }
 
-            case STRING:
-                if (element.isTextual())
-                    setValue(element.textValue());
-                break;
+        if (this instanceof ColorProperty p) {
+            if (element.isTextual())
+                p.value = ColorProperty.parseHexToInt(element.textValue());
+            return;
+        }
 
-            case HEX:
-                if (element.isTextual())
-                    setValue(parseHexToInt(element.textValue()));
-                break;
+        if (this instanceof NamespaceProperty p) {
+            if (element.isObject()) {
+                ObjectNode obj = (ObjectNode) element;
 
-            case NAMESPACE:
+                p.value.forEach((k, v) -> {
+                    v.loadFromJson(obj.get(k));
+                });
+            }
+            return;
+        }
 
-                if (element.isObject()) {
+        if (this instanceof SelectProperty p) {
+            if (element.isInt())
+                p.setSelection(element.intValue());
+            return;
+        }
 
-                    ObjectNode obj = (ObjectNode) element;
-
-                    getNamespaceValue().forEach((k, v) -> {
-                        v.loadFromJson(obj.get(k));
-                    });
-
-                }
-
-                break;
-
-            case SELECT:
-                if (element.isInt())
-                    setSelection(element.intValue());
-                break;
-
-            case KEYBINDING:
-                if (element.isInt())
-                    setValue(element.intValue());
-                break;
+        if (this instanceof KeybindingProperty p) {
+            if (element.isInt())
+                p.value = element.intValue();
         }
     }
 }
