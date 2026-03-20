@@ -15,7 +15,6 @@ import org.saturnclient.feature.FeatureDetails;
 public class NoFogFeature extends Feature {
 
     private static final BoolProperty enabled = Property.bool(false);
-    private static final BoolProperty liquids = Property.bool(false);
 
     public NoFogFeature() {
         super(
@@ -23,22 +22,12 @@ public class NoFogFeature extends Feature {
                         .description("Stops fog from rendering")
                         .tags("Camera")
                         .version("v0.2.0"),
-                enabled.named("Enabled"),
-                liquids.named("See through liquids"));
+                enabled.named("Enabled"));
     }
-
-    // ---------------------------------------------------------------
-    // Mixin query API
-    // ---------------------------------------------------------------
 
     /** Returns {@code true} when fog should be suppressed. */
     public static boolean isActive() {
         return enabled.value;
-    }
-
-    /** Returns {@code true} when liquid-fog suppression is also active. */
-    public static boolean liquids() {
-        return liquids.value;
     }
 
     // ---------------------------------------------------------------
