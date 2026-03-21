@@ -21,8 +21,8 @@ import org.saturnclient.cosmetics.utils.GifDecoder;
  * Originally created by IIpho3nix and modified for Saturn Client by leo.
  */
 public class Cloaks {
-    public static final String[] ALL_CLOAKS = { "glitch", "mercedes_flow", "crimson_mark", "bmw", "amg", "amg_petronas",
-            "ferrari", "redbull", "black_hole_amethyst", "black_hole_flame", "black_hole_white", "albania_mark", "end", "spanish_empire" };
+    public static final String[] ALL_CLOAKS = { "glitch", "mercedes_flow", "crimson_mark", "bmw", "amg", "amg_petronas", "ferrari", 
+            "redbull", "black_hole_amethyst", "black_hole_flame", "black_hole_white", "albania_mark", "end", "spanish_empire", "spain_flag" };
     private static final String[] ANIMATED_CLOAKS = { "glitch", "black_hole_amethyst", "black_hole_flame",
             "black_hole_white" };
 
