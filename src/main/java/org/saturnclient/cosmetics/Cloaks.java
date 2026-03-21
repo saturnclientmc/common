@@ -5,7 +5,6 @@ import org.saturnclient.client.player.SaturnPlayer;
 import org.saturnclient.common.provider.Providers;
 import org.saturnclient.common.ref.asset.IdentifierRef;
 
-import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +22,7 @@ import org.saturnclient.cosmetics.utils.GifDecoder;
  */
 public class Cloaks {
     public static final String[] ALL_CLOAKS = { "glitch", "mercedes_flow", "crimson_mark", "bmw", "amg", "amg_petronas",
-            "ferrari", "redbull", "black_hole_amethyst", "black_hole_flame", "black_hole_white", "albania_mark" };
+            "ferrari", "redbull", "black_hole_amethyst", "black_hole_flame", "black_hole_white", "albania_mark", "end" };
     private static final String[] ANIMATED_CLOAKS = { "glitch", "black_hole_amethyst", "black_hole_flame",
             "black_hole_white" };
 
@@ -81,37 +80,7 @@ public class Cloaks {
         if (cloakName != null && !cloakName.isEmpty()) {
             if (Arrays.asList(ANIMATED_CLOAKS).contains(cloakName)) {
                 Providers.saturn.getClient().executeOnThread(() -> loadAnimatedCloak(cloakName));
-            } else {
-                Providers.saturn.getClient().executeOnThread(() -> loadStaticCloak(cloakName + ".png"));
             }
-        }
-    }
-
-    /**
-     * Loads and processes a static cloak from a PNG file in resources.
-     * 
-     * @param fileName Name of the PNG file to load
-     */
-    private static void loadStaticCloak(String fileName) {
-        try {
-            String resourcePath = CLOAKS_RESOURCE_PATH + fileName;
-            InputStream inputStream = Cloaks.class.getClassLoader().getResourceAsStream(resourcePath);
-
-            if (inputStream != null) {
-                BufferedImage image = ImageIO.read(inputStream);
-
-                // Add debug logging for static cloak
-                Providers.saturn.logInfo("Static cloak dimensions: " + image.getWidth() + "x" + image.getHeight());
-
-                String safeFileName = fileName.toLowerCase(Locale.ROOT)
-                        .replace(' ', '_')
-                        .replaceAll("[^a-z0-9/._-]", "");
-
-                cloakCacheIdentifier = IdentifierRef.ofSaturn("cloaks_" + safeFileName);
-                Providers.saturn.registerBufferedImageTexture(cloakCacheIdentifier, image);
-            }
-        } catch (IOException e) {
-            Providers.saturn.logError("Failed to load static cloak from resources: " + fileName, e);
         }
     }
 
