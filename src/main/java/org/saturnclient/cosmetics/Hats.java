@@ -8,7 +8,7 @@ import org.saturnclient.client.ServiceClient;
 import org.saturnclient.client.player.SaturnPlayer;
 
 public class Hats {
-    public static final String[] ALL_HATS = { "horns_black", "horns_white", "halo", "halo_black", "horns_end", "halo_end" };
+    public static final String[] ALL_HATS = { "horns_black", "horns_white", "halo", "halo_black", "horns_end", "halo_end", "bucket_black" };
     public static List<String> availableHats = new ArrayList<>();
 
     public static void initialize() {
