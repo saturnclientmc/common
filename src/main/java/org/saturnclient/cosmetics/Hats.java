@@ -2,13 +2,13 @@ package org.saturnclient.cosmetics;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.saturnclient.client.ServiceClient;
 import org.saturnclient.client.player.SaturnPlayer;
 
 public class Hats {
-    public static final String[] ALL_HATS = { "horns_black", "horns_white", "halo_white", "halo_black", "horns_end", "halo_end", "bucket_black", "bucket_end" };
+    public static final String[] ALL_HATS = { "horns_black", "horns_white", "halo_white", "halo_black", "horns_end",
+            "halo_end", "bucket_black", "bucket_end" };
     public static List<String> availableHats = new ArrayList<>();
 
     public static void initialize() {
@@ -17,15 +17,13 @@ public class Hats {
 
     public static void setHat(String hatName) {
         if (availableHats.contains(hatName)) {
-            setHat(ServiceClient.uuid, hatName);
-            ServiceClient.setHat(hatName);
-        }
-    }
+            SaturnPlayer player = SaturnPlayer.get();
 
-    public static void setHat(UUID uuid, String hatName) {
-        SaturnPlayer player = SaturnPlayer.get(uuid);
-        if (player != null) {
-            player.hat = hatName;
+            if (player != null) {
+                player.hat = hatName;
+            }
+
+            ServiceClient.setHat(hatName);
         }
     }
 }
