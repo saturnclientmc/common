@@ -157,37 +157,7 @@ public class Cloaks {
 
     public static IdentifierRef getCurrentCloakTexture(String cloakName) {
         if (Arrays.asList(ANIMATED_CLOAKS).contains(cloakName)) {
-            List<GifFrame> frames = animatedCloaks.get(cloakName);
-            if (frames == null || frames.isEmpty()) {
-                return null;
-            }
-
-            long currentTime = System.currentTimeMillis();
-            long lastTime = lastFrameTime.getOrDefault(cloakName, currentTime);
-            int currentFrame = 0;
-
-            long elapsedTime = currentTime - lastTime;
-            long totalTime = 0;
-            for (int i = 0; i < frames.size(); i++) {
-                totalTime += frames.get(i).getDelayMs();
-                if (elapsedTime < totalTime) {
-                    currentFrame = i;
-                    break;
-                }
-            }
-
-            if (elapsedTime >= totalTime) {
-                lastFrameTime.put(cloakName, currentTime);
-                currentFrame = 0;
-            }
-
-            IdentifierRef identifier = frames.get(currentFrame).getTextureId();
-
-            if (identifier == null) {
-                return IdentifierRef.ofSaturn("textures/cloaks/" + cloakName + ".png");
-            }
-
-            return identifier;
+            return IdentifierRef.ofSaturn("textures/cloaks/" + cloakName + ".gif");
         } else {
             return IdentifierRef.ofSaturn("textures/cloaks/" + cloakName + ".png");
         }

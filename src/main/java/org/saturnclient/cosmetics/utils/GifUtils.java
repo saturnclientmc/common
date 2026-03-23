@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -13,7 +14,7 @@ import org.saturnclient.common.provider.Providers;
 import org.saturnclient.common.ref.asset.IdentifierRef;
 
 public class GifUtils {
-    public static Map<String, GifData> loadedCache = new ConcurrentHashMap<>();
+    public static Map<String, Optional<GifData>> loadedCache = new ConcurrentHashMap<>();
 
     private static final Queue<IdentifierRef> QUEUE = new ConcurrentLinkedQueue<>();
     private static volatile boolean RUNNING = false;
@@ -23,16 +24,18 @@ public class GifUtils {
         String g = gif.toString();
 
         if (!loadedCache.containsKey(g)) {
-            loadedCache.put(g, null);
+            loadedCache.put(g, Optional.empty());
         }
 
-        if (loadedCache.get(g) == null) {
+        Optional<GifData> loadedData = loadedCache.get(g);
+
+        if (loadedData.isEmpty()) {
             return IdentifierRef.of(g.replace(".gif", ".png"));
         }
 
         long now = System.currentTimeMillis();
 
-        GifData data = loadedCache.get(g);
+        GifData data = loadedData.get();
 
         long t = now % data.totalDuration;
 
@@ -122,7 +125,7 @@ public class GifUtils {
 
                         // Apply on main thread
                         Providers.saturn.getClient().executeOnThread(() -> {
-                            loadedCache.put(id.toString(), data);
+                            loadedCache.put(id.toString(), Optional.of(data));
                         });
 
                     } catch (Exception e) {
