@@ -23,11 +23,15 @@ public class GifUtils {
     public static IdentifierRef get(IdentifierRef gif) {
         String g = gif.toString();
 
-        if (!loadedCache.containsKey(g)) {
-            loadedCache.put(g, Optional.empty());
-        }
-
         Optional<GifData> loadedData = loadedCache.get(g);
+
+        if (loadedData == null) {
+            loadedCache.put(g, Optional.empty());
+            QUEUE.add(gif);
+            startPlayerThread();
+
+            return IdentifierRef.of(g.replace(".gif", ".png"));
+        }
 
         if (loadedData.isEmpty()) {
             return IdentifierRef.of(g.replace(".gif", ".png"));
@@ -77,10 +81,10 @@ public class GifUtils {
             // Process frames in batch
             for (int i = 0; i < frameCount; i++) {
                 BufferedImage frame = gif.getFrame(i);
-                int delay = Math.max(gif.getDelay(i) * 10, 50); // Minimum 50ms delay
+                int delay = Math.max(50, gif.getDelay(i) * 10);
 
                 String frameId = baseFrameId + "_frame_" + i;
-                IdentifierRef frameIdentifier = IdentifierRef.ofSaturn("cloaks_" + frameId);
+                IdentifierRef frameIdentifier = IdentifierRef.of(frameId);
 
                 try {
                     Providers.saturn.registerBufferedImageTexture(frameIdentifier, frame);
@@ -125,7 +129,7 @@ public class GifUtils {
 
                         // Apply on main thread
                         Providers.saturn.getClient().executeOnThread(() -> {
-                            loadedCache.put(id.toString(), Optional.of(data));
+                            loadedCache.put(id.toString(), Optional.ofNullable(data));
                         });
 
                     } catch (Exception e) {
