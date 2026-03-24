@@ -45,7 +45,7 @@ public class SpeedometerMod extends Mod implements HudMod {
 
     @Override
     public void renderHud(RenderScope scope) {
-        PlayerFeature player = Providers.module.player();
+        PlayerFeature player = Providers.feature.player();
         PlayerFeature.Velocity v = player.getVelocity();
         boolean onGround = player.isOnGround();
 

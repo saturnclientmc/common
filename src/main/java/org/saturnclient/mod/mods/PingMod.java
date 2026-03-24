@@ -35,7 +35,7 @@ public class PingMod extends Mod implements HudMod {
 
     @Override
     public void renderHud(RenderScope scope) {
-        renderPing(Providers.module.network().getPing(), scope);
+        renderPing(Providers.feature.network().getPing(), scope);
     }
 
     @Override

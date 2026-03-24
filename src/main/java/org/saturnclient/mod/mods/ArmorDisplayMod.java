@@ -1,6 +1,7 @@
 package org.saturnclient.mod.mods;
 
 import org.saturnclient.common.feature.PlayerFeature;
+import org.saturnclient.common.provider.FeatureProvider;
 import org.saturnclient.common.provider.Providers;
 import org.saturnclient.common.ref.game.ItemStackRef;
 import org.saturnclient.config.property.BoolProperty;
@@ -28,7 +29,8 @@ public class ArmorDisplayMod extends Mod implements HudMod {
                 new ModSpec("Armor Display", "armor")
                         .description("Displays armor durability")
                         .version("v0.2.0")
-                        .tags("Utility"),
+                        .tags("Utility")
+                        .requires(Providers.feature::player),
                 enabled.named("Enabled"),
                 useMainHand.named("Use Main Hand"),
                 layout.prop());
@@ -40,7 +42,7 @@ public class ArmorDisplayMod extends Mod implements HudMod {
 
     @Override
     public void renderHud(RenderScope scope) {
-        PlayerFeature player = Providers.module.player();
+        PlayerFeature player = Providers.feature.player();
         renderArmor(scope,
                 player.getMainHand(),
                 player.getHelmet(),
@@ -51,7 +53,7 @@ public class ArmorDisplayMod extends Mod implements HudMod {
 
     @Override
     public void renderDummy(RenderScope scope) {
-        PlayerFeature player = Providers.module.player();
+        PlayerFeature player = Providers.feature.player();
         renderArmor(scope,
                 player.getDummyMainHand(),
                 player.getDummyHelmet(),

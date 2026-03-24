@@ -36,7 +36,7 @@ public class DayCounterMod extends Mod implements HudMod {
 
     @Override
     public void renderHud(RenderScope scope) {
-        renderDay(Providers.module.world().getDay(), scope);
+        renderDay(Providers.feature.world().getDay(), scope);
     }
 
     @Override

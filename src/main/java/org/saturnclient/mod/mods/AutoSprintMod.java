@@ -31,8 +31,8 @@ public class AutoSprintMod extends Mod {
 
     @Override
     public void tick() {
-        PlayerFeature player = Providers.module.player();
-        NetworkFeature network = Providers.module.network();
+        PlayerFeature player = Providers.feature.player();
+        NetworkFeature network = Providers.feature.network();
 
         if (!player.hasPlayer() || !network.hasNetwork()) {
             return;

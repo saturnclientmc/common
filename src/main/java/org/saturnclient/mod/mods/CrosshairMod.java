@@ -34,11 +34,11 @@ public class CrosshairMod extends Mod {
 
     @Override
     public void render(RenderScope scope) {
-        if (!enabled.value || !Providers.module.entity().isTargetingLivingEntity()) {
+        if (!enabled.value || !Providers.feature.entity().isTargetingLivingEntity()) {
             return;
         }
 
-        RenderFeature render = Providers.module.render();
+        RenderFeature render = Providers.feature.render();
         int x = (render.getScaledWindowWidth() - CROSSHAIR_SIZE) / 2;
         int y = (render.getScaledWindowHeight() - CROSSHAIR_SIZE) / 2;
 

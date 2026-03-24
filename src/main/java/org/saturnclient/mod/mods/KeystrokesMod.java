@@ -67,7 +67,7 @@ public class KeystrokesMod extends Mod implements HudMod {
 
     @Override
     public void tick() {
-        PlayerFeature player = Providers.module.player();
+        PlayerFeature player = Providers.feature.player();
         w = player.isForwardPressed();
         a = player.isLeftPressed();
         s = player.isBackPressed();

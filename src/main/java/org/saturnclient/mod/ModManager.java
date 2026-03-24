@@ -7,15 +7,15 @@ import org.saturnclient.mod.mods.*;
 
 public class ModManager {
     public static List<Mod> ENABLED_MODS = new ArrayList<>();
-    public static Mod[] MODS = {
+    public static List<Mod> MODS = new ArrayList<>(List.of(
             new ArmorDisplayMod(), new DayCounterMod(), new KeystrokesMod(), new StatusEffectsMod(),
             new AutoSprintMod(), new FpsMod(), new NametagsMod(), new TpsMod(),
             new ClockMod(), new FreelookMod(), new NoFogMod(), new ZoomMod(),
             new CoordinatesMod(), new FullbrightMod(), new PingMod(),
-            new CrosshairMod(), new HealthDisplayMod(), new SpeedometerMod(),
-    };
+            new CrosshairMod(), new HealthDisplayMod(), new SpeedometerMod()));
 
     public static void init() {
+        MODS.removeIf(mod -> !mod.isSupported());
         updateEnabledModules();
     }
 

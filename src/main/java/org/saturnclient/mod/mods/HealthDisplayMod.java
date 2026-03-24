@@ -41,7 +41,7 @@ public class HealthDisplayMod extends Mod implements HudMod {
 
     @Override
     public void renderHud(RenderScope scope) {
-        float health = Providers.module.player().getHealth();
+        float health = Providers.feature.player().getHealth();
         if (displayMode.value == 1)
             health /= 2f; // convert to hearts
         renderHealth(health, scope);

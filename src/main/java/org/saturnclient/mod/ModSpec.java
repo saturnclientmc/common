@@ -1,11 +1,14 @@
 package org.saturnclient.mod;
 
+import java.util.function.Supplier;
+
 public class ModSpec {
     public String name;
     public String namespace;
     public String description;
     public String version;
     public String[] tags = {};
+    public Supplier<?>[] requiresFeature = {};
 
     public ModSpec(String name, String namespace) {
         this.name = name;
@@ -34,6 +37,11 @@ public class ModSpec {
 
     public ModSpec tags(String... tags) {
         this.tags = tags;
+        return this;
+    }
+
+    public ModSpec requires(Supplier<?>... suppliers) {
+        this.requiresFeature = suppliers;
         return this;
     }
 }

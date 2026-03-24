@@ -36,7 +36,7 @@ public class FpsMod extends Mod implements HudMod {
 
     @Override
     public void renderHud(RenderScope scope) {
-        renderFps(Providers.module.render().getFps(), scope);
+        renderFps(Providers.feature.render().getFps(), scope);
     }
 
     @Override

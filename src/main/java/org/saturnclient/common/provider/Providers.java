@@ -4,5 +4,5 @@ public class Providers {
     public static RefConstructorProvider refConstructor;
     public static SaturnProvider saturn;
     public static GLFWProvider GLFW;
-    public static FeatureProvider module;
+    public static FeatureProvider feature;
 }

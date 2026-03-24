@@ -43,9 +43,9 @@ public class CoordinatesMod extends Mod implements HudMod {
     @Override
     public void renderHud(RenderScope scope) {
         renderCoords(
-                Providers.module.player().getX(),
-                Providers.module.player().getY(),
-                Providers.module.player().getZ(),
+                Providers.feature.player().getX(),
+                Providers.feature.player().getY(),
+                Providers.feature.player().getZ(),
                 scope);
     }
 

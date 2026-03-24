@@ -75,7 +75,7 @@ public class FreelookMod extends Mod {
     // ---------------------------------------------------------------
 
     private void startFreelook() {
-        RenderFeature render = Providers.module.render();
+        RenderFeature render = Providers.feature.render();
         wasFirstPerson = render.isFirstPerson();
         render.setThirdPersonBack();
         isFreeLooking = true;
@@ -83,7 +83,7 @@ public class FreelookMod extends Mod {
 
     private void stopFreelook() {
         if (wasFirstPerson) {
-            Providers.module.render().setFirstPerson();
+            Providers.feature.render().setFirstPerson();
         }
         isFreeLooking = false;
     }

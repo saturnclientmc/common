@@ -1,5 +1,7 @@
 package org.saturnclient.mod;
 
+import java.util.function.Supplier;
+
 import org.saturnclient.common.ref.asset.IdentifierRef;
 import org.saturnclient.config.ConfigManager;
 import org.saturnclient.config.property.NamedProperty;
@@ -7,12 +9,12 @@ import org.saturnclient.ui.RenderScope;
 import org.saturnclient.ui.resources.Textures;
 
 public abstract class Mod {
-    private final ModSpec details;
+    private final ModSpec spec;
     private final ConfigManager configManager;
 
-    public Mod(ModSpec details, NamedProperty... props) {
-        this.details = details;
-        configManager = new ConfigManager(details.name);
+    public Mod(ModSpec spec, NamedProperty... props) {
+        this.spec = spec;
+        configManager = new ConfigManager(spec.name);
         for (NamedProperty prop : props) {
             configManager.property(prop.name, prop.prop);
         }
@@ -34,11 +36,11 @@ public abstract class Mod {
     public abstract void onEnabled(boolean e);
 
     public final String getName() {
-        return details.name;
+        return spec.name;
     }
 
     public IdentifierRef getIconTexture() {
-        return Textures.getModIcon(details.namespace);
+        return Textures.getModIcon(spec.namespace);
     }
 
     public ConfigManager getConfig() {
@@ -46,14 +48,24 @@ public abstract class Mod {
     }
 
     public String getDescription() {
-        return details.description;
+        return spec.description;
     }
 
     public String[] getTags() {
-        return details.tags;
+        return spec.tags;
     }
 
     public String getVersion() {
-        return details.version;
+        return spec.version;
+    }
+
+    public boolean isSupported() {
+        for (Supplier<?> supplier : spec.requiresFeature) {
+            if (supplier.get() == null) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

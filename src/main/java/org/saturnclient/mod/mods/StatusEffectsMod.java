@@ -43,12 +43,12 @@ public class StatusEffectsMod extends Mod implements HudMod {
 
     @Override
     public void renderHud(RenderScope scope) {
-        renderEffects(scope, Providers.module.player().getActiveEffects());
+        renderEffects(scope, Providers.feature.player().getActiveEffects());
     }
 
     @Override
     public void renderDummy(RenderScope scope) {
-        renderEffects(scope, Providers.module.player().getDummyEffects());
+        renderEffects(scope, Providers.feature.player().getDummyEffects());
     }
 
     // ---------------------------------------------------------------
