@@ -1,7 +1,7 @@
 package org.saturnclient.common.feature;
 
 /**
- * EntityModule provides queries about entities in the current world.
+ * EntityFeature provides queries about entities in the current world.
  *
  * Designed to be thin so that feature logic is not polluted with
  * engine-specific entity types.

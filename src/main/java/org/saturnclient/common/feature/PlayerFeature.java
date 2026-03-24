@@ -6,7 +6,7 @@ import org.saturnclient.common.ref.game.EffectRef;
 import org.saturnclient.common.ref.game.ItemStackRef;
 
 /**
- * PlayerModule provides access to the state of the local player.
+ * PlayerFeature provides access to the state of the local player.
  *
  * All methods return safe defaults (false / 0 / empty) when no player
  * is present so that features do not need to null-check everywhere.

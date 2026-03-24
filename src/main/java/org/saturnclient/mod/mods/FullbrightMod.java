@@ -13,7 +13,7 @@ import org.saturnclient.mod.ModSpec;
  * Actual brightness injection happens in a mixin; this class owns only
  * the configuration and the two static query methods the mixin calls.
  *
- * No ModuleProvider is needed — this feature has no per-tick engine
+ * No FeatureProvider is needed — this feature has no per-tick engine
  * interaction; the mixin polls the static helpers directly.
  */
 public class FullbrightMod extends Mod {

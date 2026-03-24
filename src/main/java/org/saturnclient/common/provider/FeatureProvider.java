@@ -7,11 +7,11 @@ import org.saturnclient.common.feature.RenderFeature;
 import org.saturnclient.common.feature.WorldFeature;
 
 /**
- * ModuleProvider is the single entry point for features to access
+ * FeatureProvider is the single entry point for features to access
  * all common engine abstractions. Implementations are supplied by
  * the platform-specific client bootstrap (e.g. the Fabric/Forge mod).
  *
- * Mods should receive a ModuleProvider in their constructor and
+ * Mods should receive a FeatureProvider in their constructor and
  * store it; they must NOT cache individual sub-modules across ticks
  * because the provider may swap implementations at runtime (e.g. on
  * world change).

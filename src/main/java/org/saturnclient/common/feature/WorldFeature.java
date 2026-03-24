@@ -1,7 +1,7 @@
 package org.saturnclient.common.feature;
 
 /**
- * WorldModule provides access to world-level information that is not
+ * WorldFeature provides access to world-level information that is not
  * tied to the local player (time of day, total age, etc.).
  *
  * All methods return safe defaults when no world is loaded.

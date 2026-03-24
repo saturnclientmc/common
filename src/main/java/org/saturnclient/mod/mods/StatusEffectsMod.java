@@ -18,7 +18,7 @@ import org.saturnclient.ui.RenderScope;
  * a HUD overlay.
  *
  * The effect list is supplied by the platform through an interface
- * returned by a future {@code PlayerModule#getActiveEffects()} call.
+ * returned by a future {@code PlayerFeature#getActiveEffects()} call.
  * Until that is wired up, the existing {@link StatusEffectsInterface}
  * bridge is used, accessed via {@link FeatureProvider}.
  */

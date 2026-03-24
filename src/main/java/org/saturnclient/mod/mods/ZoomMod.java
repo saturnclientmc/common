@@ -14,7 +14,7 @@ import org.saturnclient.mod.ModSpec;
  *
  * The FOV override is applied inside a mixin that polls
  * {@link #shouldZoom()} and {@link #getZoomLevel()} each frame.
- * No ModuleProvider is needed — there is no per-tick engine query.
+ * No FeatureProvider is needed — there is no per-tick engine query.
  */
 public class ZoomMod extends Mod {
 

@@ -15,7 +15,7 @@ import org.saturnclient.mod.ModSpec;
  *
  * TPS calculation is event-driven: the networking layer (or mixin)
  * calls {@link #onTimePacket(long)} whenever a time-update packet
- * arrives. No ModuleProvider is required because there is no
+ * arrives. No FeatureProvider is required because there is no
  * per-frame polling of the engine.
  */
 public class TpsMod extends Mod implements HudMod {

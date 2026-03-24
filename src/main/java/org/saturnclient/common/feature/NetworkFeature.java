@@ -1,7 +1,7 @@
 package org.saturnclient.common.feature;
 
 /**
- * NetworkModule provides access to the current server connection.
+ * NetworkFeature provides access to the current server connection.
  *
  * Methods return safe defaults (false / -1) when not connected.
  */

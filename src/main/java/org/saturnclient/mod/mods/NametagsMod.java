@@ -15,7 +15,7 @@ import org.saturnclient.mod.ModSpec;
  * {@link #shouldReplaceName()} and
  * {@link #getNametagString(EntityFeature.EntityState)}.
  *
- * No ModuleProvider is required here because the mixin passes the
+ * No FeatureProvider is required here because the mixin passes the
  * already-resolved {@link EntityFeature.EntityState} directly.
  */
 public class NametagsMod extends Mod {
