@@ -60,17 +60,17 @@ public class Element {
 
     public Element centerHorizontal(int w, int h, int offsetX, int offsetY) {
         this.x = (w - (int) (width * scale)) / 2 + offsetX;
-        this.y = offsetY;
+        this.y += offsetY;
 
         return this;
     }
 
     public Element center(int w, int h) {
-        this.centerOffset(w, h, 0, 0);
+        this.center(w, h, 0, 0);
         return this;
     }
 
-    public Element centerOffset(int w, int h, int offsetX, int offsetY) {
+    public Element center(int w, int h, int offsetX, int offsetY) {
         this.x = (w - (int) (width * scale)) / 2 + offsetX;
         this.y = (h - (int) (height * scale)) / 2 + offsetY;
 

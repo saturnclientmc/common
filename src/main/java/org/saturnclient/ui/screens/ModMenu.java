@@ -49,7 +49,7 @@ public class ModMenu extends SaturnScreen {
 
         draw(scroll.dimensions(scrollWidth, 350).center(width, height));
 
-        draw(new Sidebar(0, this.provider::close).centerOffset(width, height, -(scrollWidth / 2 + 20), 0));
+        draw(new Sidebar(0, this.provider::close).center(width, height, -(scrollWidth / 2 + 20), 0));
 
         draw(new ImageTexture(Textures.LOGO_TEXT_BIG).dimensions(180, 18).position(width - 180 - 20, height - 18 - 20));
     }

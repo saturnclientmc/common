@@ -23,12 +23,12 @@ public class ShiftMenu extends SaturnScreen {
         // Logo animations (unchanged)
         draw(new ImageTexture(Textures.LOGO_TEXT)
                 .dimensions(98, 10)
-                .centerOffset(width, height, 0, -36)
+                .center(width, height, 0, -36)
                 .animation(new Fade(AnimationConfig.logo.duration.value)));
 
         draw(new ImageTexture(Config.getLogo())
                 .dimensions(98, 98)
-                .centerOffset(width, height, 0, -80)
+                .center(width, height, 0, -80)
                 .animation(new SlideY(AnimationConfig.logo, -20)));
 
         // Spacing and sizes
@@ -56,7 +56,7 @@ public class ShiftMenu extends SaturnScreen {
                 .animation(new Fade(AnimationConfig.shiftMenu)));
 
         // Draw the stagger at the absolute center of the screen
-        draw(stagger.dimensions(btnWidth + (btnHeight * 2) + (spacing * 2), btnHeight).centerOffset(width, height, 0,
+        draw(stagger.dimensions(btnWidth + (btnHeight * 2) + (spacing * 2), btnHeight).center(width, height, 0,
                 0));
     }
 }

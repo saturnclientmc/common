@@ -96,10 +96,10 @@ public class HatStore extends SaturnScreen {
 
         draw(scroll
                 .dimensions(scrollWidth, 350)
-                .centerOffset(width, height, 15, 0));
+                .center(width, height, 15, 0));
 
         draw(new Sidebar(5, this.provider::close)
-                .centerOffset(width, height, -((scrollWidth - 30) / 2 + 20), 0));
+                .center(width, height, -((scrollWidth - 30) / 2 + 20), 0));
 
         draw(new TabMenu(1,
                 new TabMenuComponent(Textures.CLOAK, () -> {
@@ -107,7 +107,7 @@ public class HatStore extends SaturnScreen {
                 }),
                 new TabMenuComponent(Textures.HAT, () -> {
                 }))
-                .centerOffset(width, height, 0, -195));
+                .center(width, height, 0, -195));
     }
 
     private void handlePurchase(String hat) {

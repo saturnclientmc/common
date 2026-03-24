@@ -32,12 +32,12 @@ public class EmoteWheel extends SaturnScreen {
 
         draw(new ImageTexture(Textures.LOGO_TEXT)
                 .dimensions(98, 10)
-                .centerOffset(width, height, 0, -105)
+                .center(width, height, 0, -105)
                 .animation(new Fade(AnimationConfig.logo.duration.value)));
 
         draw(new ImageTexture(Config.getLogo())
                 .dimensions(98, 98)
-                .centerOffset(width, height, 0, -149)
+                .center(width, height, 0, -149)
                 .animation(new SlideY(AnimationConfig.logo, -20)));
 
         // =============================
@@ -51,7 +51,7 @@ public class EmoteWheel extends SaturnScreen {
                 ui();
             }
         }).dimensions(30, 30)
-                .centerOffset(width, height, -50, 105)
+                .center(width, height, -50, 105)
                 .animation(new Fade(500)));
 
         draw(new TextureButton(Textures.RIGHT, () -> {
@@ -61,7 +61,7 @@ public class EmoteWheel extends SaturnScreen {
                 ui();
             }
         }).dimensions(30, 30)
-                .centerOffset(width, height, 50, 105)
+                .center(width, height, 50, 105)
                 .animation(new Fade(500)));
 
         // =============================
@@ -86,7 +86,7 @@ public class EmoteWheel extends SaturnScreen {
                         provider.close();
                     })
                             .dimensions(70, 70)
-                            .centerOffset(width, height,
+                            .center(width, height,
                                     -80 + (col * 80),
                                     -35 + (row * 80))
                             .animation(new SlideY(AnimationConfig.emoteWheel, 12)));

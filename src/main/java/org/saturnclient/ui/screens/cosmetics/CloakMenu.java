@@ -69,7 +69,7 @@ public class CloakMenu extends SaturnScreen {
                 .animation(new Fade(500)));
 
         draw(new Sidebar(2, this.provider::close)
-                .centerOffset(width, height, -(scrollWidth / 2 + 20), 0));
+                .center(width, height, -(scrollWidth / 2 + 20), 0));
 
         draw(new TabMenu(0,
                 new TabMenuComponent(Textures.CLOAK, () -> {
@@ -77,6 +77,6 @@ public class CloakMenu extends SaturnScreen {
                 new TabMenuComponent(Textures.HAT, () -> {
                     Providers.saturn.getClient().setScreen(new HatMenu());
                 }))
-                .centerOffset(width, height, 0, -195));
+                .center(width, height, 0, -195));
     }
 }
