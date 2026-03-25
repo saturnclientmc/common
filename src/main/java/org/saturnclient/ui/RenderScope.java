@@ -32,7 +32,9 @@ public interface RenderScope {
     default void drawRoundedRectangle(int x, int y, int width, int height, int radius, int color) {
         if (color == 0)
             return;
-        radius = Math.min(radius, Math.min(width, height));
+
+        radius = Math.min(radius, width / 2);
+        radius = Math.min(radius, height / 2);
 
         String svg = String.format(
                 "<svg xmlns='http://www.w3.org/2000/svg' width='%d' height='%d'>" +
@@ -45,8 +47,9 @@ public interface RenderScope {
         InputStream svgStream = new ByteArrayInputStream(svg.getBytes(StandardCharsets.UTF_8));
 
         drawTexture(SvgTexture.getSvg(svgStream,
-                IdentifierRef.ofSaturn("textures/gui/tmp_rect/rounded_" + width + "_" + height + "_" + radius),
-                width * 3, height * 3), x, y, 0, 0, width, height, color);
+                IdentifierRef.ofSaturn(
+                        "textures/gui/tmp_rect/rounded_" + width + "_" + height + "_" + radius),
+                width * 4, height * 4), x, y, 0, 0, width, height, color);
     }
 
     void drawBorder(int x, int y, int width, int height, int color);

@@ -17,9 +17,9 @@ public class Toggle extends Element {
 
     @Override
     public void render(RenderScope renderScope, ElementContext ctx) {
-        renderScope.drawRoundedRectangle(0, 0, width, height, height,
+        renderScope.drawRoundedRectangle(0, 0, 60, 30, Theme.WIDGET_RADIUS.value,
                 Theme.withAlpha(0.5f, prop.value ? Theme.ACCENT.value : Theme.PRIMARY.value));
-        renderScope.drawRoundedRectangle(prop.value ? 30 : 0, 0, 30, 30, 30,
+        renderScope.drawRoundedRectangle(prop.value ? 30 : 0, 0, 30, 30, Theme.WIDGET_RADIUS.value,
                 prop.value ? Theme.ACCENT.value : Theme.PRIMARY.value);
     }
 
