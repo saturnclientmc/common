@@ -10,21 +10,22 @@ public abstract class Animation {
     public int delay = 0;
     public Function<Double, Double> curve = Curve::easeInOutCubic;
 
+    public static Function<Double, Double> getCurve(int curve) {
+        switch (curve) {
+            case 0:
+                return Curve::easeInOutCubic;
+            case 1:
+                return Curve::easeOutCubic;
+            case 2:
+                return Curve::easeInOutBack;
+            default:
+                return Curve::easeOutCubic;
+        }
+    }
+
     Animation(AnimationConfig config) {
         this.duration = config.duration.value;
-        switch (config.curve.value) {
-            case 0:
-                this.curve = Curve::easeInOutCubic;
-                break;
-            case 1:
-                this.curve = Curve::easeOutCubic;
-                break;
-            case 2:
-                this.curve = Curve::easeInOutBack;
-                break;
-            default:
-                break;
-        }
+        this.curve = getCurve(config.curve.value);
     }
 
     Animation(int duration) {
