@@ -17,22 +17,22 @@ import org.saturnclient.ui.anim.Animation;
 
 public class FreelookMod extends Mod {
 
+    // --- Properties ---
     private static final BoolProperty enabled = Property.bool(false);
     private static final BoolProperty toggle = Property.bool(true);
-    public static final KeybindingProperty freelookKey = Property.keybinding(GLFWProvider.GLFW_KEY_H);
+    private static final KeybindingProperty freelookKey = Property.keybinding(GLFWProvider.GLFW_KEY_H);
 
-    /** Zoom properties for freelook */
-    public static final FloatProperty zoomLevel = Property.floatProp(2.0f); // 2x zoom out
-    public static final IntProperty zoomInDuration = Property.integer(500); // ms
-    public static final IntProperty zoomOutDuration = Property.integer(300); // ms
-    public static final SelectProperty curve = Property.select(1, "Ease In Out Cubic", "Ease Out Cubic",
-            "Ease In Out Back");
+    public static final FloatProperty zoomLevel = Property.floatProp(2.0f);
+    public static final IntProperty zoomInDuration = Property.integer(500);
+    public static final IntProperty zoomOutDuration = Property.integer(300);
+    public static final SelectProperty curve = Property.select(1, "Ease In Out Cubic", "Ease Out Cubic", "Ease In Out Back");
 
-    /** Whether freelook is currently active */
-    public static boolean isFreeLooking = false;
+    // --- State Variables ---
+    private static boolean isFreeLooking = false;
+    private static boolean targetFreeLook = false;
     private static boolean wasFirstPerson = false;
 
-    /** Animation state */
+    // --- Animation State ---
     private static long animationStartTime = System.currentTimeMillis();
 
     public FreelookMod() {
@@ -51,34 +51,55 @@ public class FreelookMod extends Mod {
                 curve.named("Curve"));
     }
 
+    // --- Lifecycle Methods ---
+
     @Override
-    public void tick() {
-        // Only update freelook state — do NOT touch animation here
-        if (toggle.value) {
-            if (freelookKey.wasKeyPressed()) {
-                if (isFreeLooking)
-                    stopFreelook();
-                else
-                    startFreelook();
-            }
-        } else if (freelookKey.isKeyPressed()) {
-            if (!isFreeLooking)
-                startFreelook();
-        } else if (isFreeLooking) {
-            stopFreelook();
-        }
+    public boolean isEnabled() {
+        return enabled.value;
     }
 
     @Override
     public void onEnabled(boolean e) {
         enabled.value = e;
-        if (!e && isFreeLooking)
+        if (!e && isFreeLooking) {
             stopFreelook();
+        }
     }
 
     @Override
-    public boolean isEnabled() {
-        return enabled.value;
+    public void tick() {
+        handleInput();
+
+        // If we are returning to normal and animation finished, snap back to 1st person
+        if (!targetFreeLook && wasFirstPerson && getProgress() <= 0.0f) {
+            Providers.feature.render().setFirstPerson();
+            wasFirstPerson = false;
+        }
+    }
+
+    // --- Internal Logic ---
+
+    private void handleInput() {
+        if (toggle.value) {
+            if (freelookKey.wasKeyPressed()) {
+                targetFreeLook = !targetFreeLook;
+                toggleFreelookState(targetFreeLook);
+            }
+        } else {
+            boolean isDown = freelookKey.isKeyPressed();
+            if (isDown != targetFreeLook) { // state changed
+                targetFreeLook = isDown;
+                toggleFreelookState(targetFreeLook);
+            }
+        }
+    }
+
+    private void toggleFreelookState(boolean active) {
+        if (active) {
+            startFreelook();
+        } else {
+            stopFreelook();
+        }
     }
 
     private void startFreelook() {
@@ -90,47 +111,44 @@ public class FreelookMod extends Mod {
     }
 
     private void stopFreelook() {
-        if (wasFirstPerson) {
-            Providers.feature.render().setFirstPerson();
+        if (isFreeLooking) {
+            isFreeLooking = false;
+            animationStartTime = System.currentTimeMillis();
         }
-        isFreeLooking = false;
-        animationStartTime = System.currentTimeMillis();
     }
 
-    /** Returns true if we should apply zoom out effect */
-    public static boolean shouldZoomOut() {
-        return enabled.value && (isFreeLooking || getProgress() > 0f);
-    }
+    // --- Math Utilities ---
 
-    /** Returns the current zoom divisor (1 = normal, >1 = zoomed out) */
-    public static float getZoomLevel() {
-        float progress = getProgress();
-
-        // Apply curve
-        Function<Double, Double> curveFn = Animation.getCurve(curve.value);
-        double curved = curveFn.apply((double) progress);
-
-        // Map 0 → zoomLevel, 1 → normal FOV
-        return zoomLevel.value - (float) curved * (zoomLevel.value - 1f);
-    }
-
-    /** Returns animation progress 0 → 1 based on system time */
     private static float getProgress() {
-        boolean target = isFreeLooking;
-        int duration = target ? zoomInDuration.value : zoomOutDuration.value;
+        if (!wasFirstPerson) return 0.0f;
 
+        int duration = isFreeLooking ? zoomInDuration.value : zoomOutDuration.value;
         long now = System.currentTimeMillis();
         float rawProgress = (now - animationStartTime) / (float) duration;
 
-        if (target) {
-            return clamp(rawProgress, 0f, 1f);
-        } else {
-            // Reverse for zoom out
-            return clamp(1f - rawProgress, 0f, 1f);
-        }
+        return isFreeLooking ? clamp(rawProgress, 0.0f, 1.0f) : clamp(1.0f - rawProgress, 0.0f, 1.0f);
     }
 
     private static float clamp(float value, float min, float max) {
         return Math.max(min, Math.min(max, value));
+    }
+
+    // --- Public API / Getters for External Hooks ---
+
+    public static boolean isFreeLooking() {
+        return isFreeLooking || getProgress() > 0;
+    }
+
+    public static boolean shouldZoomOut() {
+        return enabled.value && wasFirstPerson && isFreeLooking();
+    }
+
+    public static float getZoomLevel() {
+        float progress = getProgress();
+
+        Function<Double, Double> curveFn = Animation.getCurve(curve.value);
+        double curved = curveFn.apply((double) progress);
+
+        return zoomLevel.value - (float) curved * (zoomLevel.value - 1.0f);
     }
 }
