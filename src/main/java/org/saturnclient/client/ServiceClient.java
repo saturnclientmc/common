@@ -20,6 +20,7 @@ public class ServiceClient {
             session = Session.connect("wss://saturn-server.selimaj.dev", 10, TimeUnit.SECONDS);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -77,6 +78,9 @@ public class ServiceClient {
     }
 
     public static void setCloak(String itemId) {
+        if (session == null)
+            return;
+
         try {
             session.request(ServiceMethods.SetCloak, itemId).whenComplete((msg, throwable) -> {
                 if (throwable != null) {
@@ -96,6 +100,9 @@ public class ServiceClient {
     }
 
     public static void setHat(String itemId) {
+        if (session == null)
+            return;
+
         try {
             session.request(ServiceMethods.SetHat, itemId).whenComplete((msg, throwable) -> {
                 if (throwable != null) {
@@ -115,6 +122,9 @@ public class ServiceClient {
     }
 
     public static void buyCloak(String itemId) {
+        if (session == null)
+            return;
+
         try {
             session.request(ServiceMethods.BuyCloak, itemId).whenComplete((msg, throwable) -> {
                 if (throwable != null) {
@@ -129,6 +139,9 @@ public class ServiceClient {
     }
 
     public static void buyHat(String itemId) {
+        if (session == null)
+            return;
+
         try {
             session.request(ServiceMethods.BuyHat, itemId).whenComplete((msg, throwable) -> {
                 if (throwable != null) {
@@ -143,6 +156,9 @@ public class ServiceClient {
     }
 
     public static void emote(String emote) {
+        if (session == null)
+            return;
+
         try {
             session.request(ServiceMethods.Emote,
                     new ServiceMethods.Types.EmoteRequest(emote, SaturnPlayer.getExternalUUIDAsString()))
@@ -157,6 +173,9 @@ public class ServiceClient {
     }
 
     public static void eventHandlers() {
+        if (session == null)
+            return;
+
         session.onNotification(ServiceMethods.EmoteEvent, (data) -> {
             if (data == null) {
                 return;
@@ -182,6 +201,9 @@ public class ServiceClient {
     }
 
     public static SaturnPlayer getPlayer(UUID uuid, String name) {
+        if (session == null)
+            return null;
+
         try {
             ServiceMethods.Types.Player player = session.request(ServiceMethods.GetPlayer, uuid.toString()).join();
 
