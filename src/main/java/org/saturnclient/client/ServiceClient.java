@@ -15,9 +15,21 @@ public class ServiceClient {
     private static Session session;
     public static UUID uuid;
 
+    public static void initialize() {
+        new Thread(() -> {
+            if (authenticate()) {
+                Cloaks.initialize();
+                Hats.initialize();
+                Providers.saturn.logInfo("Saturn Session initialization complete");
+            } else {
+                Providers.saturn.logError("Failed to authenticate with the server");
+            }
+        }).start();
+    }
+
     public static boolean connectTimeout() {
         try {
-            session = Session.connect("wss://saturn-server.selimaj.dev", 10, TimeUnit.SECONDS);
+            session = Session.connect("wss://saturn-server.selimaj.dev", 2, TimeUnit.MINUTES);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
