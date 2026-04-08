@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.saturnclient.common.provider.FeatureProvider;
 import org.saturnclient.common.provider.Providers;
+import org.saturnclient.common.ref.asset.SpriteRef;
 import org.saturnclient.common.ref.game.EffectRef;
 import org.saturnclient.config.property.BoolProperty;
 import org.saturnclient.config.property.Property;
@@ -63,7 +64,12 @@ public class StatusEffectsMod extends Mod implements HudMod {
             if (!effect.shouldShowIcon())
                 continue;
 
-            scope.drawSpriteStretched(effect.getIcon(), 0, 18 * row, 16, 16);
+            SpriteRef sprite = effect.getIcon();
+            if (sprite == null) {
+                scope.drawTexture(effect.getIconId(), 0, 18 * row, 0, 0, 16, 16);
+            } else {
+                scope.drawSpriteStretched(sprite, 0, 18 * row, 16, 16);
+            }
             scope.drawText(0.5f, durationString(effect),
                     18, 18 * row + 3,
                     layout.font.value, -1);
