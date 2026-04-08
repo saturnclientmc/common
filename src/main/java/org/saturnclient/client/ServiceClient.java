@@ -2,6 +2,7 @@ package org.saturnclient.client;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import org.saturnclient.client.player.SaturnPlayer;
 import org.saturnclient.common.provider.Providers;
@@ -31,10 +32,30 @@ public class ServiceClient {
         try {
             session = Session.connect("wss://saturn-server.selimaj.dev", 2, TimeUnit.MINUTES);
             return true;
+        } catch (TimeoutException e) {
+            System.out.println("Session Server timeout");
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public static boolean connectMultiTimeout() {
+        for (int i = 0; i < 5; i++) {
+            if (connectTimeout()) {
+                return true;
+            }
+
+            Providers.saturn.logError("Failed to authenticate (attempt " + (i + 1) + ")");
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ignored) {
+            }
+        }
+
+        return false;
     }
 
     public static boolean authenticate() {
@@ -62,7 +83,7 @@ public class ServiceClient {
 
             Providers.saturn.logInfo("Authenticating with UUID: " + uuid);
 
-            if (!connectTimeout()) {
+            if (!connectMultiTimeout()) {
                 Providers.saturn.logError("Unable to authenticate: Session Server Timeout");
                 return false;
             }
