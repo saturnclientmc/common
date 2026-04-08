@@ -64,19 +64,18 @@ public abstract class Input extends Element {
     public void render(RenderScope renderScope, ElementContext ctx) {
         checkReset();
 
-        renderScope.drawRoundedRectangle(0, 0, width, height, 10, 0xFF000000);
+        renderScope.drawRoundedRectangle(0, 0, width, height, 10, Theme.PRIMARY.value);
 
         int scrollOffset = getScrollOffset();
         String visibleText = getVisibleText(scrollOffset);
-        int textColor = focused ? 0xFFFFFF : 0xAAAAAA;
-        renderScope.drawText(0.6f, visibleText, 4, 4, Theme.FONT.value, textColor);
+        renderScope.drawText(0.6f, visibleText, 4, 4, Theme.FONT.value, Theme.PRIMARY_FG.value);
 
         if (focused) {
             int cursorX = 4 +
                     (int) (Fonts.getWidth(visibleText.substring(0, cursorPosition - scrollOffset), Theme.FONT.value)
                             * 0.6f);
 
-            renderScope.drawRectangle(cursorX, 2, 1, height - 4, 0xFFFFFFFF);
+            renderScope.drawRectangle(cursorX, 2, 1, height - 4, Theme.ACCENT.value);
         }
     }
 
